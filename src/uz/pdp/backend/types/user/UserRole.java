@@ -4,7 +4,8 @@ public enum UserRole {
 
     USER,
     GROUP_ADMIN,
-    USER1;
+    USER1,
+    user2;
 
 
 }
