@@ -1,19 +1,21 @@
 package uz.pdp.backend.models.group;
 
 import uz.pdp.backend.models.BaseModel;
+import uz.pdp.backend.models.user.User;
+
+import java.util.List;
 
 public class Group extends BaseModel {
 
     private String name;
-    private String authorID;
-    private String massageID;
-    private int countOfUser;
+    private String ownerID;
+    private String description;
 
-    public Group(String name, String authorID, String massageID, int countOfUser) {
+    public Group(String name, String authorID, String description, int countOfUser) {
         this.name = name;
-        this.authorID = authorID;
-        this.massageID = massageID;
-        this.countOfUser = countOfUser;
+        this.ownerID = authorID;
+        this.description = description;
+
     }
 
     public String getName() {
@@ -24,27 +26,19 @@ public class Group extends BaseModel {
         this.name = name;
     }
 
-    public String getAuthorID() {
-        return authorID;
+    public String getOwnerID() {
+        return ownerID;
     }
 
-    public void setAuthorID(String authorID) {
-        this.authorID = authorID;
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
     }
 
-    public String getMassageID() {
-        return massageID;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMassageID(String massageID) {
-        this.massageID = massageID;
-    }
-
-    public int getCountOfUser() {
-        return countOfUser;
-    }
-
-    public void setCountOfUser(int countOfUser) {
-        this.countOfUser = countOfUser;
+    public void setDescription(String massageID) {
+        this.description = description;
     }
 }

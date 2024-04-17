@@ -8,14 +8,15 @@ import java.util.Date;
 public class Message extends BaseModel {
 
     private String authorID;
-    private String message;
-    private ReceiverType receiver;
+    private String content;
+    private String ChatID;
     private Date date;
 
-    public Message(String authorID, String message, Date date) {
+    public Message(String authorID, String content, String chatID, Date date) {
         this.authorID = authorID;
-        this.message = message;
+        this.content = content;
         this.date = date;
+        this.ChatID = chatID;
     }
 
     public String getAuthorID() {
@@ -26,20 +27,12 @@ public class Message extends BaseModel {
         this.authorID = authorID;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public ReceiverType getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(ReceiverType receiver) {
-        this.receiver = receiver;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getDate() {
@@ -48,5 +41,13 @@ public class Message extends BaseModel {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getChatID() {
+        return ChatID;
+    }
+
+    public void setChatID(String chatID) {
+        ChatID = chatID;
     }
 }

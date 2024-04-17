@@ -6,16 +6,29 @@ public class Channel extends BaseModel {
 
     private String name;
     private String authorID;
-    private String messageID;
-    private String userID;
-    private int countOfUser;
+    private String description;
 
-    public Channel(String name, String authorID, String messageID, String userID, int countOfUser) {
+
+    // private String userID;
+    // private int countOfUser;
+    // private String messageID;
+
+    public Channel(String name, String authorID, String description) {
         this.name = name;
         this.authorID = authorID;
-        this.messageID = messageID;
-        this.userID = userID;
-        this.countOfUser = countOfUser;
+        this.description = description;
+        //  this.messageID = messageID;
+        //  this.userID = userID;
+        //  this.countOfUser = countOfUser;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -34,14 +47,22 @@ public class Channel extends BaseModel {
         this.authorID = authorID;
     }
 
-    public String getMessageID() {
-        return messageID;
-    }
 
+
+
+
+
+   /* public String getMessageID() {
+        return messageID;
+    }*/
+
+/*
     public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
+*/
 
+/*
     public String getUserID() {
         return userID;
     }
@@ -49,12 +70,16 @@ public class Channel extends BaseModel {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+*/
 
-    public int getCountOfUser() {
+
+   /* public int getCountOfUser() {
         return countOfUser;
     }
 
-    public void setCountOfUser(int countOfUser) {
-        this.countOfUser = countOfUser;
-    }
+   public void setCountOfUser(int countOfUser) {
+       this.countOfUser = countOfUser;
+   }
+    */
+
 }
