@@ -20,7 +20,7 @@ public abstract class BaseModel {
         return isDelete;
     }
 
-    public void setDelete(boolean delete) {
+    public void setIsDelete(boolean delete) {
         isDelete = delete;
     }
 }
