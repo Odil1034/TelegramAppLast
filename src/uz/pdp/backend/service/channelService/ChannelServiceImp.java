@@ -57,4 +57,11 @@ public class ChannelServiceImp implements ChannelService{
         }
         return false;
     }
+
+    @Override
+    public boolean writeContent(String channelId, String messageId) {
+        List<String> messages = messagesInChannels.get(channelId);
+       return messages.add(messageId);
+
+    }
 }
