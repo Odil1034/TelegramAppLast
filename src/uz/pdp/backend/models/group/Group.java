@@ -11,11 +11,10 @@ public class Group extends BaseModel {
     private String ownerID;
     private String description;
 
-    public Group(String name, String authorID, String description, int countOfUser) {
+    public Group(String name, String authorID, String description) {
         this.name = name;
         this.ownerID = authorID;
         this.description = description;
-
     }
 
     public String getName() {
