@@ -1,8 +1,9 @@
 package uz.pdp.backend.service.groupService;
 
 import uz.pdp.backend.models.group.Group;
-import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.models.user.User;
+import uz.pdp.backend.service.userService.UserService;
+import uz.pdp.backend.service.userService.UserServiceImp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +14,18 @@ public class GroupServiceImp implements GroupService {
     private static GroupServiceImp groupService;
 
 
-    private final List<Group> groupList;
-    private final Map <String, List<User>> usersInGroup;
-    private final Map <String, List<User>> adminsInGroup;
+    private final List<Group> groupList; // all groups list
+    private final Map<String, List<String>> usersInGroup;  /// <groupID, < List<usersID> >
+    private final Map<String, List<String>> adminsInGroup; /// <groupID, < List<adminsID> >
+    private final Map<String, List<String>> messagesInGroup; /// <groupID, < List<MessagesID> >
+
 
 
     private GroupServiceImp() {
         adminsInGroup = new HashMap<>();
         groupList = new ArrayList<>();
         usersInGroup = new HashMap<>();
+        messagesInGroup = new HashMap<>();
     }
 
     public static GroupService getInstance() {
@@ -68,18 +72,18 @@ public class GroupServiceImp implements GroupService {
 
 
     @Override
-    public List<User> getUsersInGroup(String groupID) {
-        return  usersInGroup.get(groupID);
+    public List<String> getUsersInGroup(String groupID) {
+        return usersInGroup.get(groupID);
     }
 
     @Override
-    public List<User> getAdminsInGroup(String groupID) {
+    public List<String> getAdminsInGroup(String groupID) {
         return adminsInGroup.get(groupID);
     }
 
     @Override
-    public List<Message> getMessagesInGroup(String groupID) {
-        return null;
+    public List<String> getMessagesInGroup(String groupID) {
+        return messagesInGroup.get(groupID);
     }
 
     @Override
@@ -100,5 +104,24 @@ public class GroupServiceImp implements GroupService {
             }
         }
         return null;
+    }
+
+
+    @Override
+    public boolean addUserInGroup(String userID, String groupID) {
+        usersInGroup.get(groupID).add(userID);
+        return true;
+    }
+
+    @Override
+    public boolean addAdminInGroup(String userID, String groupID) {
+        adminsInGroup.get(groupID).add(userID);
+        return true;
+    }
+
+    @Override
+    public boolean addMessageInGroup(String MessageID, String groupID) {
+        messagesInGroup.get(groupID).add(MessageID);
+        return true;
     }
 }
