@@ -3,27 +3,32 @@ package uz.pdp.backend.service.channelService;
 import uz.pdp.backend.models.channel.Channel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChannelServiceImp implements ChannelService{
 
-    private static ChannelService service;
-    private List<Channel> channelList;
+    private static ChannelService channelService;
+    private final List<Channel> channelList;
+    private Map <String, List<String>> messagesInChannels; // k = channelId, v = message list of channel
 
     public static ChannelService getInstance() {
-        if (service == null){
-            service = new ChannelServiceImp();
+        if (channelService == null){
+            channelService = new ChannelServiceImp();
         }
-        return service;
+        return channelService;
     }
 
     public ChannelServiceImp() {
         channelList = new ArrayList<>();
+        messagesInChannels = new HashMap<>();
     }
 
     @Override
     public boolean create(Channel channel) {
         channelList.add(channel);
+        messagesInChannels.put(channel.getID(), new ArrayList<>());
         return true;
     }
 

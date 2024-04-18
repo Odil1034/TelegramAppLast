@@ -13,6 +13,7 @@ public class Channel extends BaseModel {
     // private int countOfUser;
     // private String messageID;
 
+
     public Channel(String name, String authorID, String description) {
         this.name = name;
         this.authorID = authorID;
