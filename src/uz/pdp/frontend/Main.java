@@ -30,6 +30,7 @@ public class Main {
 
 
     public static void main(String[] args){
+        System.out.println("sout test");
 
         User umar = userService.getUserByUsername("Umar");
         String umarID = umar.getID();
