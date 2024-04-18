@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 .idea
 TelegramAppLast.iml
+TelegramApp.iml
 
 ### Eclipse ###
 .apt_generated
