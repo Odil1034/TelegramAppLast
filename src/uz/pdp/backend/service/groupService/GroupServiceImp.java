@@ -1,9 +1,6 @@
 package uz.pdp.backend.service.groupService;
 
 import uz.pdp.backend.models.group.Group;
-import uz.pdp.backend.models.user.User;
-import uz.pdp.backend.service.userService.UserService;
-import uz.pdp.backend.service.userService.UserServiceImp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +23,7 @@ public class GroupServiceImp implements GroupService {
         groupList = new ArrayList<>();
         usersInGroup = new HashMap<>();
         messagesInGroup = new HashMap<>();
+
     }
 
     public static GroupService getInstance() {
@@ -37,7 +35,18 @@ public class GroupServiceImp implements GroupService {
 
     @Override
     public boolean create(Group group) {
+        String groupID = group.getID();
         groupList.add(group);
+
+        List<String> userList = new ArrayList<>();
+        List<String> adminList = new ArrayList<>();
+        List<String> messageList = new ArrayList<>();
+
+        userList.add(group.getOwnerID());
+
+        usersInGroup.put(groupID, userList);
+        adminsInGroup.put(groupID, adminList);
+        messagesInGroup.put(groupID,messageList);
         return true;
     }
 
@@ -108,7 +117,7 @@ public class GroupServiceImp implements GroupService {
 
 
     @Override
-    public boolean addUserInGroup(String userID, String groupID) {
+    public boolean addUserInGroup(String groupID, String userID) {
         usersInGroup.get(groupID).add(userID);
         return true;
     }
