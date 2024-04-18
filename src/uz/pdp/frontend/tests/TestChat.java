@@ -1,4 +1,4 @@
-package uz.pdp.frontend;
+package uz.pdp.frontend.tests;
 
 import uz.pdp.backend.models.chat.Chat;
 import uz.pdp.backend.models.message.Message;
