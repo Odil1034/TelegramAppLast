@@ -1,4 +1,4 @@
-package uz.pdp.frontend;
+package uz.pdp.frontend.tests;
 
 import uz.pdp.backend.models.channel.Channel;
 import uz.pdp.backend.models.chat.Chat;
@@ -113,7 +113,6 @@ public class Main {
         boolean contentIsCreated = channelService.writeContent(channelID, messageID);
         System.out.println("contentIsCreated = " + contentIsCreated);
         System.out.println("messageIsCreated2 = " + messageIsCreated2);
-
 
 
 
