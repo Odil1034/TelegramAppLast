@@ -5,6 +5,8 @@ import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -65,6 +67,25 @@ public class UserServiceImp implements UserService {
                 return user;
             }
         }
+        return null;
+    }
+
+    @Override
+    public LocalDate makeBirthday(String birthdayStr) {
+        /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(birthdayStr);
+        } catch (ParseException e) {
+
+        }
+        LocalDate localDate = null;
+        if(date!=null){
+            localDate = LocalDate.parse((CharSequence) date);
+        }
+
+        return localDate;*/
         return null;
     }
 
