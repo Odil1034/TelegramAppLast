@@ -3,7 +3,7 @@ package uz.pdp.frontend.utills;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class util {
+public class InputStream {
     private static final Scanner scanInt = new Scanner(System.in);
     private static final Scanner scanStr = new Scanner(System.in);
 
