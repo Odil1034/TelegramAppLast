@@ -4,20 +4,54 @@ import uz.pdp.backend.models.BaseModel;
 import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class User extends BaseModel {
 
+    private String name;
+    private String lastName;
+    private LocalDate birthDay;
     private String username;
     private String password;
     private String nickname;
     private UserRole role;
     private StatusType status;
 
-    public User(String username, String password, String nickname, UserRole role, StatusType status) {
+    public User(String name, String lastName, LocalDate birthDay, String username,
+                String password, String nickname, UserRole role, StatusType status) {
+        this.name = name;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.role = role;
         this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
     }
 
     public String getUsername() {

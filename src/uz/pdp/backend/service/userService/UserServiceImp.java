@@ -5,7 +5,10 @@ import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,12 +18,13 @@ public class UserServiceImp implements UserService {
 
     private UserServiceImp() {
         this.users = new ArrayList<>();
-        users.add(new User("Umar", "umar1202",
+        /*users.add(new User("Umar", "umar1202",
                 "UmarBegTOP", UserRole.USER, StatusType.ONLINE));
         users.add(new User("Xurshid", "xurshid123",
-                "Khurshidbek", UserRole.USER, StatusType.ONLINE));
-        users.add(new User("Odiljon", "odil2003",
-                "Odil1034", UserRole.GROUP_ADMIN, StatusType.ONLINE));
+                "Khurshidbek", UserRole.USER, StatusType.ONLINE));*/
+        users.add(new User("Odiljon", "Baxriddinov",
+                LocalDate.of(2003, Month.AUGUST, 7), "odil2003",
+                "Odil1034", "odil", UserRole.GROUP_ADMIN, StatusType.ONLINE));
     }
 
     // Singleton Design Pattern
@@ -90,7 +94,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User login(LoginDTO loginDTO) {
+    public User  login(LoginDTO loginDTO) {
         for (User user : users) {
             if (user.getUsername().equals(loginDTO.username()) &&
                 user.getPassword().equals(loginDTO.password())) {

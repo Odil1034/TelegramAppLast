@@ -3,11 +3,11 @@ package uz.pdp.frontend.utills;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputStream {
-    private static final Scanner scanInt = new Scanner(System.in);
-    private static final Scanner scanStr = new Scanner(System.in);
+public interface InputStream {
+    Scanner scanInt = new Scanner(System.in);
+    Scanner scanStr = new Scanner(System.in);
 
-    public static int getInt(String hint) {
+    static int getInt(String hint) {
         int num;
         while (true) {
             try {
@@ -22,12 +22,12 @@ public class InputStream {
         return num;
     }
 
-    public static String getStr(String hint){
+    static String getStr(String hint){
         System.out.print(hint);
         return scanStr.nextLine();
     }
 
-    public static double getDouble(String hint) {
+    static double getDouble(String hint) {
         double num;
         while (true) {
             try {
