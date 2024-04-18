@@ -4,12 +4,12 @@ import uz.pdp.backend.DTO.LoginDTO;
 import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
+import uz.pdp.backend.types.user.StatusType;
+import uz.pdp.backend.types.user.UserRole;
 import uz.pdp.frontend.utills.InputStream;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 public class LoginView {
 
@@ -28,13 +28,32 @@ public class LoginView {
         String name = InputStream.getStr("Name: ");
         String lastName = InputStream.getStr("LastName: ");
         String birthdayStr = InputStream.getStr("Enter your birthday as dd/mm/yyyy : ");
-        userService.makeBirthday(birthdayStr);
+        LocalDate birthday = userService.makeBirthday(birthdayStr);
 
+        String username = InputStream.getStr("Username: ");
+        String nickname = InputStream.getStr("NickName: ");
+        String password = InputStream.getStr("Password: ");
 
+        boolean isUserCreated = userService.signUp(new User(name, lastName, birthday,
+                username, password, nickname, UserRole.USER, StatusType.ACTIVE));
 
-        InputStream.getStr("Username: ");
-        InputStream.getStr("NickName: ");
+        if(isUserCreated){
+            System.out.println("You are registered ✅✅✅");
+        }else {
+            System.out.println("such a user exist ❌❌❌");
+        }
 
     };
+
+    public static void main(String[] args) {
+
+        LoginView.signUp();
+
+        List<User> usersList = userService.getList();
+        for (User user : usersList) {
+            System.out.println(user);
+        }
+
+    }
 
 }

@@ -29,8 +29,10 @@ public class testChannel {
 
     public static void main(String[] args) {
 
+/*
+
         User bobur = new User("Bob", "101", "Bobur",
-                UserRole.USER, StatusType.ONLINE);
+                UserRole.USER, StatusType.ACTIVE);
         String boburID = bobur.getID();
 
         Channel boburChannel = new Channel
@@ -63,6 +65,7 @@ public class testChannel {
         for (Message message : messages) {
             System.out.println(message.getContent());
         }
+*/
 
 
     }

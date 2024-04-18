@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService extends BaseService<User> {
 
     User login(LoginDTO loginDTO);
-    User signUp(User user);
+    boolean signUp(User user);
     User getUserByUsername(String username);
     LocalDate makeBirthday(String birthdayStr);
 }

@@ -93,4 +93,18 @@ public class User extends BaseModel {
     public void setStatus(StatusType status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+               "name='" + name + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", birthDay=" + birthDay +
+               ", username='" + username + '\'' +
+               ", password='" + password + '\'' +
+               ", nickname='" + nickname + '\'' +
+               ", role=" + role +
+               ", status=" + status +
+               '}';
+    }
 }

@@ -18,12 +18,12 @@ public class UserServiceImp implements UserService {
     private UserServiceImp() {
         this.users = new ArrayList<>();
         /*users.add(new User("Umar", "umar1202",
-                "UmarBegTOP", UserRole.USER, StatusType.ONLINE));
+                "UmarBegTOP", UserRole.USER, StatusType.ACTIVE));
         users.add(new User("Xurshid", "xurshid123",
-                "Khurshidbek", UserRole.USER, StatusType.ONLINE));*/
+                "Khurshidbek", UserRole.USER, StatusType.ACTIVE));*/
         users.add(new User("Odiljon", "Baxriddinov",
                 LocalDate.of(2003, Month.AUGUST, 7), "odil2003",
-                "Odil1034", "odil", UserRole.GROUP_ADMIN, StatusType.ONLINE));
+                "Odil1034", "odil", UserRole.GROUP_ADMIN, StatusType.ACTIVE));
     }
 
     // Singleton Design Pattern
@@ -123,18 +123,13 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User signUp(User user) {
+    public boolean signUp(User newUser) {
         for (User user1 : users) {
-            if (user.getUsername().equals(user1.getUsername()) &&
-                user.getPassword().equals(user1.getPassword())) {
-                return null;
+            if(Objects.equals(user1, newUser)){
+                return false;
             }
         }
-        for (User user1 : users) {
-            if(Objects.equals(user1, user)){
-                return user1;
-            }
-        }
-        return null;
+        users.add(newUser);
+        return true;
     }
 }

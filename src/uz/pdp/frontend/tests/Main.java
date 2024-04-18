@@ -30,6 +30,7 @@ public class Main {
 
 
     public static void main(String[] args){
+    /*
         System.out.println("sout test");
 
         User umar = userService.getUserByUsername("Umar");
@@ -98,7 +99,7 @@ public class Main {
 
 
         User bobur = new User("Bubur002", "002",
-                "Bob", UserRole.USER, StatusType.ONLINE);
+                "Bob", UserRole.USER, StatusType.ACTIVE);
         String boburID = bobur.getID();
         Channel channel = new Channel("G40 home works", boburID, "home works for g40");
 
@@ -114,8 +115,7 @@ public class Main {
         System.out.println("contentIsCreated = " + contentIsCreated);
         System.out.println("messageIsCreated2 = " + messageIsCreated2);
 
-
-
+*/
 
 
     }
