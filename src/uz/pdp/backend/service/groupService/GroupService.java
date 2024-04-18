@@ -13,7 +13,7 @@ public interface GroupService extends BaseService<Group> {
     String getOwnerUserId(String groupID);
     String getGroupDescription(String groupID);
 
-    boolean addUserInGroup(String userID, String groupID);
+    boolean addUserInGroup(String groupID, String userID);
     boolean addAdminInGroup(String userID, String groupID);
     boolean addMessageInGroup(String MessageID, String groupID);
 
