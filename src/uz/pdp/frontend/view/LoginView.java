@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LoginView {
 
-    private static UserService userService = UserServiceImp.getInstance();
+    private static final UserService userService = UserServiceImp.getInstance();
 
     public static User logIn(){
         System.out.println("Enter login info: ");
@@ -31,11 +31,10 @@ public class LoginView {
         LocalDate birthday = userService.makeBirthday(birthdayStr);
 
         String username = InputStream.getStr("Username: ");
-        String nickname = InputStream.getStr("NickName: ");
         String password = InputStream.getStr("Password: ");
 
         boolean isUserCreated = userService.signUp(new User(name, lastName, birthday,
-                username, password, nickname, UserRole.USER, StatusType.ACTIVE));
+                username, password, UserRole.USER, StatusType.ACTIVE));
 
         if(isUserCreated){
             System.out.println("You are registered ✅✅✅");
