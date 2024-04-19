@@ -3,12 +3,9 @@ package uz.pdp.frontend.utills;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputStream {
-    private static final Scanner scanInt = new Scanner(System.in);
-    private static final Scanner scanStr = new Scanner(System.in);
-
-    private InputStream() {
-    }
+public interface ScanInput {
+    Scanner scanInt = new Scanner(System.in);
+    Scanner scanStr = new Scanner(System.in);
 
     public static int getInt(String hint) {
         int num;

@@ -10,8 +10,6 @@ public class ChatServiceImp implements ChatService {
     private final List<Chat> chatList;
 
 
-
-
     private ChatServiceImp() {
         chatList = new ArrayList<>();
     }
