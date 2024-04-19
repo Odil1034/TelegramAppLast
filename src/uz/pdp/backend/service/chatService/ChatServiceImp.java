@@ -1,6 +1,8 @@
 package uz.pdp.backend.service.chatService;
 
 import uz.pdp.backend.models.chat.Chat;
+import uz.pdp.backend.service.userService.UserService;
+import uz.pdp.backend.service.userService.UserServiceImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +66,17 @@ public class ChatServiceImp implements ChatService {
             }
         }
         return userChats;
+    }
+
+    @Override
+    public String determineChatName(String chatID, String currentUserID) {
+        UserService userService = UserServiceImp.getInstance();
+        for (Chat chat : chatList) {
+            if (chat.getID().equals(chatID)){
+                if (chat.getFirstUserID().equals(currentUserID)) return userService.get(chat.getSecondUserID()).getName();
+                else return userService.get(chat.getFirstUserID()).getName();
+            }
+        }
+        return null;
     }
 }

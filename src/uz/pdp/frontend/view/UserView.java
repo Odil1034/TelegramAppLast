@@ -1,5 +1,6 @@
 package uz.pdp.frontend.view;
 
+import uz.pdp.backend.models.BaseModel;
 import uz.pdp.backend.models.channel.Channel;
 import uz.pdp.backend.models.chat.Chat;
 import uz.pdp.backend.models.group.Group;
@@ -38,33 +39,29 @@ public class UserView {
             int choice = MenuUtils.menu(MenuUtils.USER_MENU);
             switch (choice) {
                 case 1 -> {
-                    //   showAll();
+                    Group group = showOrCreateGroup();
+                    showMessages(messageService.getMessages(group.getID()), group.getName());
+                    writeMessage(group, group.getName());
                 }
                 case 2 -> {
-                    showChats();
+                    Chat chat = showOrCreateChat();
+                    if (chat != null){
+                        String name = chatService.determineChatName(chat.getID(), curUser.getID());
+                        List<Message> messages = messageService.getMessages(chat.getID());
+                        writeMessage(chat, name);
+                    }else {
+                        System.out.println("something wrong");
+                        return;
+                    }
                 }
                 case 3 -> {
-                    showGroups();
+                    List<Channel> channels = showChannels();
                 }
                 case 4 -> {
-                    showChannels();
+                    showProfile();
+                    ///....
                 }
-                case 5 -> {
-                    createGroup();
-                }
-                case 6 -> {
-                    newChat();
-                }
-                case 7 -> {
-                    createChannel();
-                }
-                case 8 -> {
-                    myProfile();
-                }
-                case 9 -> {
-                    editProfile();
-                }
-                case 10 -> {
+                case 0 -> {
                     System.out.println("logged out");
                     curUser = null;
                     return;
@@ -74,17 +71,44 @@ public class UserView {
                 }
             }
         }
-
-
     }
 
-    private static void myProfile() {
 
-        showProfile();
-
-
+    private static void writeMessage(BaseModel chat, String chatName) {
+        while (true) {
+            showMessages(messageService.getMessages(chat.getID()), chatName);
+            int menu = MenuUtils.menu("""
+                    
+                    ==========================================================
+                    1.Write new message
+                    2.add user in group
+                    2.Edit message
+                    3.Exit
+                    ==========================================================""");
+            switch (menu) {
+                case 1 -> {
+                    messageService.create(new Message(curUser.getID(),
+                            InputStream.getStr("Write new message: "),
+                            chat.getID(), new Date()));
+                }
+                case 2 -> {
+                    List<Message> messages = messageService.getMessages(chat.getID());
+                    int i = 1;
+                    for (Message message : messages) {
+                        System.out.println(i + ". " + message.getContent());
+                        i++;
+                    }
+                    int choiceMessage = InputStream.getInt("choice: ") - 1;
+                    Message message = messages.get(choiceMessage);
+                    String txt = InputStream.getStr("write new message: ");
+                    message.setContent(txt);
+                }
+                case 3 -> {
+                    return;
+                }
+            }
+        }
     }
-
 
     private static void editProfile() {
         System.out.println("Settings");
@@ -93,11 +117,13 @@ public class UserView {
 
         while (true) {
             String settings = """
+                    ==========================================================
                     1.Change first name
                     2.Change last name
                     3.Change birth date
                     4.Change username
                     0.Exit
+                    ==========================================================
                     """;
             int menu = MenuUtils.menu(settings);
             switch (menu) {
@@ -136,7 +162,6 @@ public class UserView {
         }
     }
 
-
     private static void showProfile() {
         String name = curUser.getName();
         String lastName = curUser.getLastName();
@@ -174,7 +199,6 @@ public class UserView {
         return channel;
     }
 
-
     private static Group createGroup() {
         String groupName, description;
 
@@ -206,31 +230,93 @@ public class UserView {
         return channels;
     }
 
-    private static List<Group> showGroups() {
+    private static Group showOrCreateGroup() {
         List<Group> groups = groupService.getGroups(curUser.getID());
+        if (groups.isEmpty()){
+            System.out.println("you don't have any groups yet");
+        }
         int i = 1;
         for (Group group : groups) {
             System.out.println
                     (i + ". " + group.getName());
             i++;
         }
-        return groups;
+        System.out.println(i + ". " + "Create new group");
+        System.out.println("0. " + "Exit");
+
+        int choice = InputStream.getInt("choice: ");
+        if (choice == i) {
+            return createGroup();
+        } if (choice == 0){
+            return null;
+        }else {
+            choice--;
+            return groups.get(choice);
+        }
+
+
     }
 
-    private static void newChat() {
+    private static Chat showOrCreateChat() {
+        List<Chat> allUsersChat = chatService.getAllUsersChat(curUser.getID());
+        if (allUsersChat.isEmpty()) {
+            int menu = MenuUtils.menu("""
+                    ==========================================================
+                    you don't have any chats yet
+                    1.create chat
+                    2.exit
+                    ==========================================================
+                    """);
+            if (menu == 1) return createChat();
+            else return null;
+        }
+
+        System.out.println("==========================================================");
+        int i = 1;
+
+        for (Chat chat : allUsersChat) {
+
+            String chatName = chatService.determineChatName(chat.getID(), curUser.getID());
+                System.out.println(i + ". " + chatName);
+
+            i++;
+        }
+        System.out.println("0.Exit");
+        System.out.println("==========================================================");
+        int choice = InputStream.getInt("choice: ") - 1;
+        if (choice < -1 || choice >= allUsersChat.size()) {
+            System.out.println("wrong choice");
+            return null;
+        } else if (choice == -1) {
+            return null;
+        } else {
+            return allUsersChat.get(choice);
+        }
 
     }
 
-    private static void showChats() {
+    private static Chat createChat() {
+        System.out.println("find user");
+        String username = InputStream.getStr("enter username: ");
+        User userByUsername = userService.getUserByUsername(username);
+        if (userByUsername == null) {
+            System.out.println("user is not found");
+        } else {
+            Chat newChat = new Chat(curUser.getID(), userByUsername.getID());
+            boolean chatIsCreated = chatService.create(newChat);
 
+            if (chatIsCreated) {
+                return newChat;
+            }
+
+        }
+        return null;
     }
 
 
-    private static void showMessagesInChat(String chatID, String chatName) {
-        Chat chat = chatService.get(chatID);
+    private static void showMessages(List<Message> messages, String chatName) {
         System.out.println("\n==========================================================");
         System.out.println(chatName);
-        List<Message> messages = messageService.getMessages(chatID);
         for (Message message : messages) {
             System.out.println(userService.get(message.getAuthorID()).getName() + ": " + message.getContent());
         }

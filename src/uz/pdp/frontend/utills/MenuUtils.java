@@ -26,16 +26,11 @@ public interface MenuUtils {
 
     String USER_MENU = """
             ==========================================================
-            1. All\s
+            1. Groups\s
             2. Chats\s
-            3. Groups\s
-            4. Channels\s
-            5. Create group\s
-            6. New Chat\s
-            7. Create channel\s
-            8. My profile\s
-            9. Settings\s
-            10. Log Out\s
+            3. Channels\s
+            4. My profile\s
+            0. Log Out\s
             ==========================================================""";
 
 
