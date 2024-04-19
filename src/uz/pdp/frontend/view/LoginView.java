@@ -6,7 +6,7 @@ import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
 import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
-import uz.pdp.frontend.utills.InputStream;
+import uz.pdp.frontend.utills.ScanInput;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,21 +17,21 @@ public class LoginView {
 
     public static User logIn(){
         System.out.println("Enter login info: ");
-        String username = InputStream.getStr("Username: ");
-        String password = InputStream.getStr("Password: ");
+        String username = ScanInput.getStr("Username: ");
+        String password = ScanInput.getStr("Password: ");
 
         return userService.login(new LoginDTO(username, password));
     };
 
     public static void signUp(){
         System.out.println("Enter your Info for signUp: ");
-        String name = InputStream.getStr("Name: ");
-        String lastName = InputStream.getStr("LastName: ");
-        String birthdayStr = InputStream.getStr("Enter your birthday as dd/mm/yyyy : ");
+        String name = ScanInput.getStr("Name: ");
+        String lastName = ScanInput.getStr("LastName: ");
+        String birthdayStr = ScanInput.getStr("Enter your birthday as dd/mm/yyyy : ");
         LocalDate birthday = userService.makeBirthday(birthdayStr);
 
-        String username = InputStream.getStr("Username: ");
-        String password = InputStream.getStr("Password: ");
+        String username = ScanInput.getStr("Username: ");
+        String password = ScanInput.getStr("Password: ");
 
         boolean isUserCreated = userService.signUp(new User(name, lastName, birthday,
                 username, password, UserRole.USER, StatusType.ACTIVE));

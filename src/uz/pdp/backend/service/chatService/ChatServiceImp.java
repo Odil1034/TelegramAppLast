@@ -54,7 +54,7 @@ public class ChatServiceImp implements ChatService {
     }
 
     @Override
-    public List<Chat> getAllUsersChat(String userID) {
+    public List<Chat> getAllUsersChatsByUserID(String userID) {
         List<Chat> userChats = new ArrayList<>();
         for (Chat chat : chatList) {
             if (chat.getFirstUserID().equals(userID) || chat.getSecondUserID().equals(userID)){

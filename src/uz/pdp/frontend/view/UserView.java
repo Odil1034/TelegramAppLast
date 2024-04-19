@@ -17,11 +17,10 @@ import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
 import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
-import uz.pdp.frontend.utills.InputStream;
 import uz.pdp.frontend.utills.MenuUtils;
+import uz.pdp.frontend.utills.ScanInput;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public class UserView {
@@ -102,23 +101,23 @@ public class UserView {
             int menu = MenuUtils.menu(settings);
             switch (menu) {
                 case 1 -> {
-                    String firstName = InputStream.getStr("enter new first name: ");
+                    String firstName = ScanInput.getStr("enter new first name: ");
                     curUser.setName(firstName);
                     System.out.println("first name is changed");
                 }
                 case 2 -> {
-                    String lastName = InputStream.getStr("enter new last name: ");
+                    String lastName = ScanInput.getStr("enter new last name: ");
                     curUser.setName(lastName);
                     System.out.println("last name is changed");
                 }
                 case 3 -> {
-                    String date = InputStream.getStr("enter your new birth date: ");
+                    String date = ScanInput.getStr("enter your new birth date: ");
                     LocalDate localDate = userService.makeBirthday(date);
                     curUser.setBirthDay(localDate);
                     System.out.println("your birth date was changed success");
                 }
                 case 4 -> {
-                    String username = InputStream.getStr("enter new username: ");
+                    String username = ScanInput.getStr("enter new username: ");
                     if (userService.isValidUsername(username)) {
                         curUser.setUsername(username);
                         System.out.println("username success changed");
@@ -159,8 +158,8 @@ public class UserView {
     private static Channel createChannel() {
         String channelName, description;
 
-        channelName = InputStream.getStr("enter channel name: ");
-        description = InputStream.getStr("enter channel description: ");
+        channelName = ScanInput.getStr("enter channel name: ");
+        description = ScanInput.getStr("enter channel description: ");
 
         Channel channel = new Channel(channelName, curUser.getID(), description);
 
@@ -178,8 +177,8 @@ public class UserView {
     private static Group createGroup() {
         String groupName, description;
 
-        groupName = InputStream.getStr("enter group name: ");
-        description = InputStream.getStr("enter group description: ");
+        groupName = ScanInput.getStr("enter group name: ");
+        description = ScanInput.getStr("enter group description: ");
 
 
         Group group = new Group(groupName, curUser.getID(), description);
@@ -230,7 +229,7 @@ public class UserView {
         Chat chat = chatService.get(chatID);
         System.out.println("\n==========================================================");
         System.out.println(chatName);
-        List<Message> messages = messageService.getMessages(chatID);
+        List<Message> messages = messageService.getMessagesByChatID(chatID);
         for (Message message : messages) {
             System.out.println(userService.get(message.getAuthorID()).getName() + ": " + message.getContent());
         }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ChatService extends BaseService<Chat> {
 
-    List<Chat> getAllUsersChat(String userID);
+    List<Chat> getAllUsersChatsByUserID(String userID);
 }

@@ -6,7 +6,7 @@ public interface MenuUtils {
     String MAIN = """
             ==========================================================
             MAIN MENU\s
-            1. Login In\s
+            1. Log In\s
             2. Sign Up\s
             3. Exit
             ==========================================================""";
@@ -41,6 +41,6 @@ public interface MenuUtils {
 
     static int menu(String menu){
         System.out.println(menu);
-        return InputStream.getInt("choice: ");
+        return ScanInput.getInt("choice: ");
     }
 }
