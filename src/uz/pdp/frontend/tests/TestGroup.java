@@ -66,7 +66,7 @@ public class TestGroup {
         List<Message> groupMessages = messageService.getMessages(groupID);
 
         for (Message message : groupMessages) {
-            System.out.println(userService.get(message.getAuthorID()).getNickname() + ": " + message.getContent());
+            System.out.println(userService.get(message.getAuthorID()).getName() + ": " + message.getContent());
         }
 
         System.out.println("\ntest is successfully");

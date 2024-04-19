@@ -26,25 +26,21 @@ public class TestChat {
 
     public static void main(String[] args) {
 
-        User umar = userService.getUserByUsername("Umar");
+        User umar = userService.getUserByUsername("user");
         String umarID = umar.getID();
-        User xurshid = userService.getUserByUsername("Xurshid");
+        User xurshid = userService.getUserByUsername("1");
         String xurshidID = xurshid.getID();
-        User odiljon = userService.getUserByUsername("Odiljon");
-        String odiljonID = odiljon.getID();
 
-        Chat chat1 = new Chat(umarID, odiljonID);
-        String chat1ID = chat1.getID();
+        Chat chat = new Chat(umarID, xurshidID);
 
-        Message message1 = new Message(umarID, "test txt", chat1ID, new Date());
-        Message message2 = new Message(odiljonID, "test txt from Odiljon", chat1ID, new Date());
+        Message message1 = new Message(xurshidID, "content", chat.getID(), new Date());
 
         messageService.create(message1);
-        messageService.create(message2);
 
-        List<Message> chat1Messages = messageService.getMessages(chat1ID);
+
+        List<Message> chat1Messages = messageService.getMessages(chat.getID());
         for (Message message : chat1Messages) {
-            System.out.println(userService.get(message.getAuthorID()).getNickname()+": " + message.getContent());
+            System.out.println(userService.get(message.getAuthorID()).getName()+": " + message.getContent());
 
         }
 
