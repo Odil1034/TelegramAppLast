@@ -24,12 +24,14 @@ public class ChannelServiceImp implements ChannelService{
     public ChannelServiceImp() {
         channelList = new ArrayList<>();
         messagesInChannels = new HashMap<>();
+        subscribedUsers = new HashMap<>();
     }
 
     @Override
     public boolean create(Channel channel) {
         channelList.add(channel);
         messagesInChannels.put(channel.getID(), new ArrayList<>());
+        subscribedUsers.put(channel.getID(), new ArrayList<>(List.of(channel.getAuthorID())));
         return true;
     }
 

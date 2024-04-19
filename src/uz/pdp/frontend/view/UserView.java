@@ -86,59 +86,55 @@ public class UserView {
     }
 
 
-
     private static void editProfile() {
         System.out.println("Settings");
 
         showProfile();
 
         while (true) {
-        String settings = """
-                1.Change first name
-                2.Change last name
-                3.Change birth date
-                4.Change username
-                0.Exit
-                """;
-        int menu = MenuUtils.menu(settings);
-        switch (menu){
-            case 1 -> {
-                String firstName = InputStream.getStr("enter new first name: ");
-                curUser.setName(firstName);
-                System.out.println("first name is changed");
-            }
-            case 2 -> {
-                String lastName = InputStream.getStr("enter new last name: ");
-                curUser.setName(lastName);
-                System.out.println("last name is changed");
-            }
-            case 3 -> {
-                String date = InputStream.getStr("enter your new birth date: ");
-                LocalDate localDate = userService.makeBirthday(date);
-                curUser.setBirthDay(localDate);
-                System.out.println("your birth date was changed success");
-            }
-            case 4 -> {
-                String username = InputStream.getStr("enter new username: ");
-                if (userService.isValidUsername(username)){
-                    curUser.setUsername(username);
-                    System.out.println("username success changed");
-                }else {
-                    System.out.println("entered invalid username");
+            String settings = """
+                    1.Change first name
+                    2.Change last name
+                    3.Change birth date
+                    4.Change username
+                    0.Exit
+                    """;
+            int menu = MenuUtils.menu(settings);
+            switch (menu) {
+                case 1 -> {
+                    String firstName = InputStream.getStr("enter new first name: ");
+                    curUser.setName(firstName);
+                    System.out.println("first name is changed");
                 }
+                case 2 -> {
+                    String lastName = InputStream.getStr("enter new last name: ");
+                    curUser.setName(lastName);
+                    System.out.println("last name is changed");
+                }
+                case 3 -> {
+                    String date = InputStream.getStr("enter your new birth date: ");
+                    LocalDate localDate = userService.makeBirthday(date);
+                    curUser.setBirthDay(localDate);
+                    System.out.println("your birth date was changed success");
+                }
+                case 4 -> {
+                    String username = InputStream.getStr("enter new username: ");
+                    if (userService.isValidUsername(username)) {
+                        curUser.setUsername(username);
+                        System.out.println("username success changed");
+                    } else {
+                        System.out.println("entered invalid username");
+                    }
 
-                System.out.println("name is changed");
+                    System.out.println("name is changed");
+                }
+                case 0 -> {
+                    return;
+                }
+                default -> System.out.println("wrong choice");
             }
-            case 0 -> {
-                return;
-            }
-            default -> System.out.println("wrong choice");
         }
     }
-}
-
-
-
 
 
     private static void showProfile() {
@@ -151,12 +147,12 @@ public class UserView {
         StatusType status = curUser.getStatus();
 
         System.out.println("==========================================================");
-        System.out.println("Account Status: "+status);
-        System.out.println("First name: "+name);
-        System.out.println("Last name: "+lastName);
-        System.out.println("Birth date: "+birthDay);
-        System.out.println("Username: "+username);
-        System.out.println("User role: "+role);
+        System.out.println("Account Status: " + status);
+        System.out.println("First name: " + name);
+        System.out.println("Last name: " + lastName);
+        System.out.println("Birth date: " + birthDay);
+        System.out.println("Username: " + username);
+        System.out.println("User role: " + role);
         System.out.println("==========================================================");
     }
 
@@ -200,20 +196,23 @@ public class UserView {
 
     private static List<Channel> showChannels() {
         List<Channel> channels = channelService.getChannels(curUser.getID());
-
-        for (int i = 0; i < channels.size(); i++) {
+        int i = 1;
+        for (Channel channel : channels) {
 
             System.out.println
-                    (++i + ". " + channels.get(i).getName());
+                    (i + ". " + channel.getName());
+            i++;
         }
         return channels;
     }
 
     private static List<Group> showGroups() {
         List<Group> groups = groupService.getGroups(curUser.getID());
-        for (int i = 0; i < groups.size(); i++) {
+        int i = 1;
+        for (Group group : groups) {
             System.out.println
-                    (++i + ". " + groups.get(i).getName());
+                    (i + ". " + group.getName());
+            i++;
         }
         return groups;
     }
