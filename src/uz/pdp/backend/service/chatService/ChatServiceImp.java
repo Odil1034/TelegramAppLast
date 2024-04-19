@@ -54,4 +54,15 @@ public class ChatServiceImp implements ChatService {
     public boolean delete(String ID) {
         return chatList.removeIf(chat -> chat.getID().equals(ID));
     }
+
+    @Override
+    public List<Chat> getAllUsersChat(String userID) {
+        List<Chat> userChats = new ArrayList<>();
+        for (Chat chat : chatList) {
+            if (chat.getFirstUserID().equals(userID) || chat.getSecondUserID().equals(userID)){
+                userChats.add(chat);
+            }
+        }
+        return userChats;
+    }
 }
