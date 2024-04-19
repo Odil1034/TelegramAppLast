@@ -6,7 +6,6 @@ import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
 import uz.pdp.backend.types.user.UserRole;
 import uz.pdp.frontend.utills.MenuUtils;
-import uz.pdp.frontend.view.AdminView;
 import uz.pdp.frontend.view.LoginView;
 import uz.pdp.frontend.view.UserView;
 

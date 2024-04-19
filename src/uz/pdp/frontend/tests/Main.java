@@ -31,9 +31,6 @@ public class Main {
 
     public static void main(String[] args){
 
-        while (true){
-
-        }
     /*
         System.out.println("sout test");
 
@@ -120,8 +117,6 @@ public class Main {
         System.out.println("messageIsCreated2 = " + messageIsCreated2);
 
 */
-
-        System.out.println("test");
 
     }
 }
