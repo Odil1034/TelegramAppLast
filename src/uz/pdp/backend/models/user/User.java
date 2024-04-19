@@ -11,21 +11,19 @@ public class User extends BaseModel {
 
     private String name;
     private String lastName;
-    private LocalDate birthDay;
     private String username;
     private String password;
-    private String nickname;
+    private LocalDate birthDay;
     private UserRole role;
     private StatusType status;
 
     public User(String name, String lastName, LocalDate birthDay, String username,
-                String password, String nickname, UserRole role, StatusType status) {
+                String password, UserRole role, StatusType status) {
         this.name = name;
         this.lastName = lastName;
         this.birthDay = birthDay;
         this.username = username;
         this.password = password;
-        this.nickname = nickname;
         this.role = role;
         this.status = status;
     }
@@ -70,13 +68,6 @@ public class User extends BaseModel {
         this.password = password;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     public UserRole getRole() {
         return role;
@@ -102,7 +93,6 @@ public class User extends BaseModel {
                ", birthDay=" + birthDay +
                ", username='" + username + '\'' +
                ", password='" + password + '\'' +
-               ", nickname='" + nickname + '\'' +
                ", role=" + role +
                ", status=" + status +
                '}';
