@@ -17,7 +17,6 @@ public class GroupServiceImp implements GroupService {
     private final Map<String, List<String>> messagesInGroup; /// <groupID, < List<MessagesID> >
 
 
-
     private GroupServiceImp() {
         adminsInGroup = new HashMap<>();
         groupList = new ArrayList<>();
@@ -42,11 +41,11 @@ public class GroupServiceImp implements GroupService {
         List<String> adminList = new ArrayList<>();
         List<String> messageList = new ArrayList<>();
 
-        userList.add(group.getOwnerID());
+        boolean add = userList.add(group.getOwnerID());
 
         usersInGroup.put(groupID, userList);
         adminsInGroup.put(groupID, adminList);
-        messagesInGroup.put(groupID,messageList);
+        messagesInGroup.put(groupID, messageList);
         return true;
     }
 
@@ -132,5 +131,19 @@ public class GroupServiceImp implements GroupService {
     public boolean addMessageInGroup(String MessageID, String groupID) {
         messagesInGroup.get(groupID).add(MessageID);
         return true;
+    }
+
+    @Override
+    public List<Group> getGroups(String userID) {
+
+        List<Group> groups = new ArrayList<>();
+
+        for (Group group : groupList) {
+            String groupID = group.getID();
+            if (usersInGroup.get(groupID).contains(userID)) {
+                groups.add(group);
+            }
+        }
+        return groups;
     }
 }
