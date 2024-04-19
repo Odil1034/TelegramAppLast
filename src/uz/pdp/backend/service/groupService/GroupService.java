@@ -17,6 +17,8 @@ public interface GroupService extends BaseService<Group> {
     boolean addAdminInGroup(String userID, String groupID);
     boolean addMessageInGroup(String MessageID, String groupID);
 
+    List<Group> getGroups(String userID);
+
     // get messages in group method have a MessageService
 
 }
