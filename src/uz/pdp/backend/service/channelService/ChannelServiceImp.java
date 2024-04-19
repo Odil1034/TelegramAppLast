@@ -12,6 +12,7 @@ public class ChannelServiceImp implements ChannelService{
     private static ChannelService channelService;
     private final List<Channel> channelList;
     private Map <String, List<String>> messagesInChannels; // k = channelId, v = message list of channel
+    private Map <String, List<String>> subscribedUsers; // k = channelId, v = subscribed users list
 
     public static ChannelService getInstance() {
         if (channelService == null){
@@ -68,5 +69,27 @@ public class ChannelServiceImp implements ChannelService{
         List<String> messages = messagesInChannels.get(channelId);
        return messages.add(messageId);
 
+    }
+
+    @Override
+    public List<Channel> getChannels(String userID) {
+
+        List<Channel> channels = new ArrayList<>();
+
+        for (Channel channel : channelList) {
+            if (subscribedUsers.get(channel.getID()).contains(userID)) {
+                channels.add(channel);
+            }
+        }
+        return channels;
+    }
+
+    @Override
+    public boolean userSubscriptionToChannel(String channelID, String userID) {
+        List<String> users = subscribedUsers.get(channelID);
+        if (users == null){
+            throw new NullPointerException();
+        }
+       return users.add(userID);
     }
 }
