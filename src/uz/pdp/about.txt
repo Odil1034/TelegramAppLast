@@ -5,6 +5,7 @@
          * 2. chats
          * 3. channels
          * 4. About yourself
+         *
          * 5. Exit
          */
 
