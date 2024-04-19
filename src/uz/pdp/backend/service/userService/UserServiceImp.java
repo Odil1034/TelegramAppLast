@@ -8,6 +8,7 @@ import uz.pdp.backend.types.user.UserRole;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,13 +18,14 @@ public class UserServiceImp implements UserService {
 
     private UserServiceImp() {
         this.users = new ArrayList<>();
-        /*users.add(new User("Umar", "umar1202",
-                "UmarBegTOP", UserRole.USER, StatusType.ACTIVE));
-        users.add(new User("Xurshid", "xurshid123",
-                "Khurshidbek", UserRole.USER, StatusType.ACTIVE));*/
+
         users.add(new User("Odiljon", "Baxriddinov",
-                LocalDate.of(2003, Month.AUGUST, 7), "odil2003",
-                "Odil1034", "odil", UserRole.GROUP_ADMIN, StatusType.ACTIVE));
+                LocalDate.of(2003, Month.AUGUST, 7), "1",
+                "1",  UserRole.ADMIN, StatusType.ACTIVE));
+
+        users.add(new User("user", "user",
+                LocalDate.of(2000, Month.JANUARY, 1), "user",
+                "user", UserRole.USER, StatusType.ACTIVE));
     }
 
     // Singleton Design Pattern
@@ -84,6 +86,16 @@ public class UserServiceImp implements UserService {
 
         return localDate;*/
         return null;
+    }
+
+    @Override
+    public boolean isValidUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username) || username.isBlank() || username.isEmpty()){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
