@@ -29,8 +29,6 @@ public class ConsoleUi {
                     if(loginUser != null){
                         if(loginUser.getRole().equals(UserRole.USER)){
                             UserView.profile(loginUser);
-                        }else if(loginUser.getRole().equals(UserRole.ADMIN)){
-                            AdminView.profile(loginUser);
                         }else {
                             System.out.println("Something is wrong ❌❌❌");
                         }
