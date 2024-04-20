@@ -1,10 +1,8 @@
 package uz.pdp.backend.models.message;
 
 import uz.pdp.backend.models.BaseModel;
-import uz.pdp.backend.models.receiver.ReceiverType;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Message extends BaseModel {
 

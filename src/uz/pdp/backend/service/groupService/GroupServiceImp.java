@@ -140,7 +140,8 @@ public class GroupServiceImp implements GroupService {
 
         for (Group group : groupList) {
             String groupID = group.getID();
-            if (usersInGroup.get(groupID).contains(userID)) {
+            if (usersInGroup.get(groupID).contains(userID) ||
+                    adminsInGroup.get(groupID).contains(userID)) {
                 groups.add(group);
             }
         }
