@@ -29,7 +29,7 @@ public class ConsoleUi {
                         if(loginUser.getRole().equals(UserRole.USER)){
                             UserView.profile(loginUser);
                         }else {
-                            System.out.println("Something is wrong ❌❌❌");
+                            System.out.println("Something is wrong 2❌❌❌");
                         }
                     }else {
                         System.out.println("username or password is incorrect ❌❌❌");
