@@ -10,18 +10,30 @@ public interface MenuUtils {
             2. Sign Up\s
             3. Exit
             ==========================================================""";
+
+    /*
+    * sistemaga admin kirgandigi menyu
+    * 1.hamma  userlani korsatadi i tanlagan useri:
+    *       1. profilini korishi kere
+    *       2. subscribe bogan kanallarini korishi kere
+    *       3. qaysi grupada bosa osha grupani ozini korishi kere
+    *       4. useri block qilishi
+    *       5. useri unblock qilishi
+    * 2. useri qidirish i topgan useri
+    *       profili, kanallari, grupasi hulas osha gap
+    * 3. show channels: sistemadigi hama kanallani korish
+    * 4. show groups: hama grupalani korish
+    *  i telegramda nimadur qisa shulani yozish kere
+    * */
     String ADMIN_MENU = """
             ==========================================================
             1. Show users (%d)\s
-            2. Block or unblock user\s
-            3. Write message\s
-            4. Delete message\s
-            5. Change group name\s
-            6. Change group picture\s
-            7. Add admin\s
-            8. Chat history\s
-            9. Search user\s
-            10. Delete and leave group
+            2. Search user
+            3. Show channels
+            4. Show groups
+            5...
+            6...
+            0. Log out
             ==========================================================""";
 
     String USER_MENU = """
