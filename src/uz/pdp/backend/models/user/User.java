@@ -5,6 +5,7 @@ import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class User extends BaseModel {
@@ -83,6 +84,10 @@ public class User extends BaseModel {
 
     public void setStatus(StatusType status) {
         this.status = status;
+    }
+
+    public String getBirthdayStr(){
+        return birthDay.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     @Override

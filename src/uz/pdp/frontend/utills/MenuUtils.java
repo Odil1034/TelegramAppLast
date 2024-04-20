@@ -5,7 +5,8 @@ public interface MenuUtils {
     // main Menu
     String MAIN = """
             ==========================================================
-            MAIN MENU\s
+                                   MAIN MENU
+            ==========================================================
             1. Log In\s
             2. Sign Up\s
             3. Exit
@@ -27,6 +28,8 @@ public interface MenuUtils {
      * */
     String ADMIN_MENU = """
             ==========================================================
+                                   ADMIN MENU
+            ==========================================================
             1. Show users (%d)
             2. Search user
             3. Show channels
@@ -36,6 +39,8 @@ public interface MenuUtils {
             0. Log out
             ==========================================================""";
     String USER_CONTROL_MENU = """
+            ==========================================================
+                               USER CONTROL MENU
             ==========================================================
             1. Show user info
             2. Show user channels
@@ -47,6 +52,8 @@ public interface MenuUtils {
 
     String USER_MENU = """
             ==========================================================
+                                     USER MENU
+            ==========================================================
             1. Groups\s
             2. Chats\s
             3. Channels\s
@@ -55,6 +62,8 @@ public interface MenuUtils {
             ==========================================================""";
 
     String CHANNEL_OWNER_MENU = """
+            ==========================================================
+                                   CHANNEL OWNER MENU
             ==========================================================
             1. Write message
             2. Edit message
@@ -68,6 +77,8 @@ public interface MenuUtils {
 
     String CHANNEL_USERS_MENU = """
             ==========================================================
+                                   CHANNEL USER MENU
+            ==========================================================
             1. Show description
             2. Leave channel
             0. Exit
@@ -75,6 +86,8 @@ public interface MenuUtils {
 
 
     String GROUP_OWNER_MENU = """
+            ==========================================================
+                                   GROUP OWNER MENU
             ==========================================================
             1. Write message
             2. Edit message (only our message)
@@ -91,6 +104,8 @@ public interface MenuUtils {
 
     String GROUP_ADMIN_MENU = """
             ==========================================================
+                                  GROUP ADMIN MENU
+            ==========================================================
             1. Write message
             2. Edit messages (only our message)
             3. Delete message (can delete any message)
@@ -103,6 +118,8 @@ public interface MenuUtils {
 
     String GROUP_USER_MENU = """
             ==========================================================
+                                   GROUP USER MENU
+            ==========================================================
             1. Write message
             2. Edit message (only our message)
             3. Delete message (can delete our message)
@@ -112,6 +129,8 @@ public interface MenuUtils {
             ==========================================================""";
 
     String CHAT_MENU = """
+            ==========================================================
+                                   CHAT MENU
             ==========================================================
             1. Write message
             2. Edit message (only our message)

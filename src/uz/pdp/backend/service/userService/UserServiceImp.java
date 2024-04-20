@@ -19,17 +19,21 @@ public class UserServiceImp implements UserService {
     private UserServiceImp() {
         this.users = new ArrayList<>();
 
-        users.add(new User("user2", "user2",
-                LocalDate.of(2003, Month.AUGUST, 7), "user2",
-                "user2",  UserRole.USER, StatusType.ACTIVE));
+        users.add(new User("admin1", "admin1",
+                LocalDate.of(2001, Month.AUGUST, 7), "admin",
+                "qwerty",  UserRole.ADMIN, StatusType.ACTIVE));
 
         users.add(new User("user1", "user1",
-                LocalDate.of(2000, Month.JANUARY, 1), "user1",
-                "user1", UserRole.USER, StatusType.ACTIVE));
+                LocalDate.of(2002, Month.JANUARY, 1), "user1",
+                "qwerty", UserRole.USER, StatusType.ACTIVE));
 
-        users.add(new User("user3", "user3",
-                LocalDate.of(2000, Month.JANUARY, 1), "user3",
-                "user3", UserRole.USER, StatusType.ACTIVE));
+        users.add(new User("user2", "user2",
+                LocalDate.of(2003, Month.DECEMBER, 3), "user2",
+                "qwerty", UserRole.USER, StatusType.ACTIVE));
+
+        users.add(new User("user4", "user4",
+                LocalDate.of(2004, Month.FEBRUARY, 28), "user3",
+                "qwerty", UserRole.USER, StatusType.ACTIVE));
     }
 
     // Singleton Design Pattern

@@ -41,7 +41,7 @@ public class UserView {
                 case 1 -> {
                     Group group = getOrCreateGroup();
                     if (group == null) break;
-                    //showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
+                    showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
                     groupMenu(group);
                 }
                 case 2 -> {
@@ -110,9 +110,7 @@ public class UserView {
                     User foundUser = findUser();
                     if (foundUser != null) {
                         System.out.println(foundUser);
-                        System.out.println("can you add this user to your group?");
-                        System.out.println("1.yes");
-                        System.out.println("2.no");
+                        System.out.println("can you add this user to your group? \n 1.yes \n 2.no");
                         int n = ScanInput.getInt("choice: ");
                         if (n == 1) addUser(group, foundUser);
                         else if (n == 2) return;

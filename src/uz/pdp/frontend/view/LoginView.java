@@ -21,7 +21,7 @@ public class LoginView {
         String password = ScanInput.getStr("Password: ");
 
         return userService.login(new LoginDTO(username, password));
-    };
+    }
 
     public static void signUp(){
         System.out.println("Enter your Info for signUp: ");
@@ -42,17 +42,5 @@ public class LoginView {
             System.out.println("such a user exist ❌❌❌");
         }
 
-    };
-
-    public static void main(String[] args) {
-
-        LoginView.signUp();
-
-        List<User> usersList = userService.getList();
-        for (User user : usersList) {
-            System.out.println(user);
-        }
-
     }
-
 }
