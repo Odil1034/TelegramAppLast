@@ -3,20 +3,21 @@ package uz.pdp.backend.models.message;
 import uz.pdp.backend.models.BaseModel;
 import uz.pdp.backend.models.receiver.ReceiverType;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Message extends BaseModel {
 
     private String authorID;
     private String content;
-    private String ChatID;
-    private Date date;
+    private String chatID;
+    private LocalDateTime dateTime;
 
-    public Message(String authorID, String content, String chatID, Date date) {
+    public Message(String authorID, String content, String chatID, LocalDateTime dateTime) {
         this.authorID = authorID;
         this.content = content;
-        this.date = date;
-        this.ChatID = chatID;
+        this.dateTime = dateTime;
+        this.chatID = chatID;
     }
 
     public String getAuthorID() {
@@ -35,19 +36,19 @@ public class Message extends BaseModel {
         this.content = content;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getChatID() {
-        return ChatID;
+        return chatID;
     }
 
     public void setChatID(String chatID) {
-        ChatID = chatID;
+        this.chatID = chatID;
     }
 }

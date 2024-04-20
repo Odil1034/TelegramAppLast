@@ -9,20 +9,11 @@ public class Channel extends BaseModel {
     private String description;
 
 
-    // private String userID;
-    // private int countOfUser;
-    // private String messageID;
-
-
     public Channel(String name, String authorID, String description) {
         this.name = name;
         this.authorID = authorID;
         this.description = description;
-        //  this.messageID = messageID;
-        //  this.userID = userID;
-        //  this.countOfUser = countOfUser;
     }
-
 
     public String getDescription() {
         return description;
@@ -47,40 +38,5 @@ public class Channel extends BaseModel {
     public void setAuthorID(String authorID) {
         this.authorID = authorID;
     }
-
-
-
-
-
-
-   /* public String getMessageID() {
-        return messageID;
-    }*/
-
-/*
-    public void setMessageID(String messageID) {
-        this.messageID = messageID;
-    }
-*/
-
-/*
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-*/
-
-
-   /* public int getCountOfUser() {
-        return countOfUser;
-    }
-
-   public void setCountOfUser(int countOfUser) {
-       this.countOfUser = countOfUser;
-   }
-    */
 
 }

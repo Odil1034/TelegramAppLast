@@ -6,7 +6,6 @@ import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
 import uz.pdp.backend.types.user.UserRole;
 import uz.pdp.frontend.utills.MenuUtils;
-import uz.pdp.frontend.view.AdminView;
 import uz.pdp.frontend.view.LoginView;
 import uz.pdp.frontend.view.UserView;
 
@@ -29,8 +28,6 @@ public class ConsoleUi {
                     if(loginUser != null){
                         if(loginUser.getRole().equals(UserRole.USER)){
                             UserView.profile(loginUser);
-                        }else if(loginUser.getRole().equals(UserRole.ADMIN)){
-                            AdminView.profile(loginUser);
                         }else {
                             System.out.println("Something is wrong ❌❌❌");
                         }

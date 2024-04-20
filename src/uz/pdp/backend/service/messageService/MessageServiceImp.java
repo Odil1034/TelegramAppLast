@@ -42,14 +42,19 @@ public class MessageServiceImp implements MessageService{
     }
 
     @Override
-    public void update(Message newM) {
-        //???
+    public void update(Message newMessage) {
+        for (Message message : messages) {
+            if (message.getID().equals(newMessage.getID())) {
+                message.setContent(newMessage.getContent());
+                message.setDateTime(newMessage.getDateTime());
+            }
+        }
     }
 
     @Override
-    public boolean delete(String ID) {
+    public boolean delete(String messageID) {
         for (Message message : messages) {
-            if (message.getID().equals(ID)){
+            if (message.getID().equals(messageID)){
                 messages.remove(message);
                 return true;
             }
@@ -58,7 +63,7 @@ public class MessageServiceImp implements MessageService{
     }
 
     @Override
-    public List<Message> getMessages(String chatID) {
+    public List<Message> getMessagesByChatID(String chatID) {
         List<Message> messagesInChat = new ArrayList<>();
         for (Message message : messages) {
             if (message.getChatID().equals(chatID)){
