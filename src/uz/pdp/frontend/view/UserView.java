@@ -340,7 +340,7 @@ public class UserView {
     }
 
     private static Chat showOrCreateChat() {
-        List<Chat> allUsersChat = chatService.getAllUsersChat(curUser.getID());
+        List<Chat> allUsersChat = chatService.getAllUsersChatsByUserID(curUser.getID());
         if (allUsersChat.isEmpty()) {
             int menu = MenuUtils.menu("""
                     ==========================================================
