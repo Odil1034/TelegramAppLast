@@ -12,28 +12,37 @@ public interface MenuUtils {
             ==========================================================""";
 
     /*
-    * sistemaga admin kirgandigi menyu
-    * 1.hamma  userlani korsatadi i tanlagan useri:
-    *       1. profilini korishi kere
-    *       2. subscribe bogan kanallarini korishi kere
-    *       3. qaysi grupada bosa osha grupani ozini korishi kere
-    *       4. useri block qilishi
-    *       5. useri unblock qilishi
-    * 2. useri qidirish i topgan useri
-    *       profili, kanallari, grupasi hulas osha gap
-    * 3. show channels: sistemadigi hama kanallani korish
-    * 4. show groups: hama grupalani korish
-    *  i telegramda nimadur qisa shulani yozish kere
-    * */
+     * sistemaga admin kirgandigi menyu
+     * 1.hamma  userlani korsatadi i tanlagan useri:
+     *       1. profilini korishi kere
+     *       2. subscribe bogan kanallarini korishi kere
+     *       3. qaysi grupada bosa osha grupani ozini korishi kere
+     *       4. useri block qilishi
+     *       5. useri unblock qilishi
+     * 2. useri qidirish i topgan useri
+     *       profili, kanallari, grupasi hulas osha gap
+     * 3. show channels: sistemadigi hama kanallani korish
+     * 4. show groups: hama grupalani korish
+     *  i telegramda nimadur qisa shulani yozish kere
+     * */
     String ADMIN_MENU = """
             ==========================================================
-            1. Show users (%d)\s
+            1. Show users (%d)
             2. Search user
             3. Show channels
             4. Show groups
             5...
             6...
             0. Log out
+            ==========================================================""";
+    String USER_CONTROL_MENU = """
+            ==========================================================
+            1. Show user info
+            2. Show user channels
+            3. Show user groups
+            4. Block user
+            5. Unblock user
+            0. back to menu
             ==========================================================""";
 
     String USER_MENU = """
@@ -63,8 +72,6 @@ public interface MenuUtils {
             2. Leave channel
             0. Exit
             ==========================================================""";
-
-
 
 
     String GROUP_OWNER_MENU = """
