@@ -15,6 +15,7 @@ public interface UserService extends BaseService<User> {
     boolean signUp(User user);
     User getUserByUsername(String username);
     LocalDate makeBirthday(String birthdayStr);
+    int getUserAge(User user);
     boolean isValidUsername(String username);
 
 

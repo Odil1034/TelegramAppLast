@@ -24,7 +24,7 @@ public class LoginView {
     }
 
     public static void signUp(){
-        System.out.println("Enter your Info for signUp: ");
+        System.out.println("Enter your Info: ");
         String name = ScanInput.getStr("Name: ");
         String lastName = ScanInput.getStr("LastName: ");
         String birthdayStr = ScanInput.getStr("Enter your birthday as dd/mm/yyyy : ");

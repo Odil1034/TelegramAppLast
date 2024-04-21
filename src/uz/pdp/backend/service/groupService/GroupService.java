@@ -1,6 +1,7 @@
 package uz.pdp.backend.service.groupService;
 
 import uz.pdp.backend.models.group.Group;
+import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.service.BaseService;
 
 

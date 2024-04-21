@@ -1,7 +1,8 @@
 package uz.pdp.frontend.utills;
 
-import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
+
+;
 
 public interface MenuUtils {
 
@@ -34,7 +35,7 @@ public interface MenuUtils {
             ==========================================================
                                    ADMIN MENU
             ==========================================================
-            1. Show users (%d)
+            1. Show users
             2. Search user
             3. Show channels
             4. Show groups
@@ -168,6 +169,6 @@ public interface MenuUtils {
 
     static int menu(String menu) {
         System.out.println(menu);
-        return ScanInput.getInt("choice: ");
+        return ScanInput.getInt("Choice: ");
     }
 }

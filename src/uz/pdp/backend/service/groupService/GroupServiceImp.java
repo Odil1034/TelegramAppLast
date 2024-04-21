@@ -1,6 +1,7 @@
 package uz.pdp.backend.service.groupService;
 
 import uz.pdp.backend.models.group.Group;
+import uz.pdp.backend.models.message.Message;
 
 import java.util.*;
 
@@ -63,9 +64,9 @@ public class GroupServiceImp implements GroupService {
     }
 
     @Override
-    public boolean delete(String ID) {
+    public boolean delete(String groupID) {
         for (Group group : groupList) {
-            if (group.getID().equals(ID)) {
+            if (group.getID().equals(groupID)) {
                 groupList.remove(group);
                 return true;
             }
