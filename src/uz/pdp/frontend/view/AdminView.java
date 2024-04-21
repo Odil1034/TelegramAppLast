@@ -18,7 +18,8 @@ import uz.pdp.frontend.utills.MenuUtils;
 import uz.pdp.frontend.utills.ScanInput;
 
 import java.util.List;
-import java.util.Set;
+
+import static uz.pdp.frontend.view.CommonMenuMethods.showUsers;
 
 public class AdminView {
 
@@ -57,7 +58,7 @@ public class AdminView {
         int menu = MenuUtils.menu(MenuUtils.ADMIN_MENU);
         while (true) {
             switch (menu) {
-                case 1 -> showUsers();
+                case 1 -> showUsers(userService.getList());
                 case 2 -> searchUser();
                 case 3 -> AdminView.showChannels();
                 case 4 -> showGroups();
@@ -69,22 +70,6 @@ public class AdminView {
                 }
             }
         }
-    }
-
-    private static List<User> showUsers() {
-        List<User> usersList = userService.getList();
-
-        System.out.println("User List: \n" + "=".repeat(60));
-        System.out.println("№\t USERNAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
-        for (int i = 0; i < usersList.size(); i++) {
-            User user = usersList.get(i);
-            System.out.println(i + 1 + ". \t " + user.getUsername() + " \t   " + user.getRole() +
-                               " \t " + user.getStatus() + " \t " + user.getBirthDay() +" \t " + userService.getUserAge(user));
-        }
-        int userInd = ScanInput.getInt("Choose user: ") - 1;
-        UserControl(usersList.get(userInd));
-        return usersList;
-
     }
 
     private static void showGroups() {
@@ -157,7 +142,7 @@ public class AdminView {
         for (int i = 0; i < userGroups.size(); i++) {
             Group group = userGroups.get(i);
             User ownerGroup = userService.get(group.getOwnerID());
-            Set<String> groupUsers = groupService.getUsersInGroup(group.getID());
+            List<String> groupUsers = groupService.getUsersInGroup(group.getID());
             int countMembers = groupUsers.size();
             System.out.println(i + 1 + ". " + group.getName() +
                                "\tOwner: " + ownerGroup.getUsername() +
@@ -169,14 +154,7 @@ public class AdminView {
     }
 
     private static void EnterGroup(Group group) {
-        System.out.printf("""
-                ==========================================================
-                                        GROUP %S
-                ==========================================================
-                """, group.getName());
-        List<String> messagesIDInGroup = groupService.getMessagesInGroup(group.getID());
 
-//        messageService.getMessagesByChatID();
     }
 
     private static void showUserChannels(User user) {
@@ -291,13 +269,6 @@ public class AdminView {
             }
         }
 
-    }
-
-    public static void main(String[] args) {
-        showUsers();
-        searchUser();
-        showGroups();
-        showChannels();
     }
 
 }

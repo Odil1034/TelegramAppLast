@@ -13,7 +13,7 @@ public interface MenuUtils {
             ==========================================================
             1. Log In
             2. Sign Up
-            3. Exit
+            0. Exit
             ==========================================================""";
 
     /*
@@ -124,7 +124,7 @@ public interface MenuUtils {
 
     String GROUP_USER_MENU = """
             ==========================================================
-                                   GROUP USER MENU
+                                 GROUP USER MENU
             ==========================================================
             1. Write message
             2. Edit message (only our message)

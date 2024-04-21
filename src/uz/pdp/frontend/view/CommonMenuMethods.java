@@ -23,6 +23,7 @@ import uz.pdp.frontend.utills.ScanInput;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface CommonMenuMethods {
@@ -32,51 +33,63 @@ public interface CommonMenuMethods {
     GroupService groupService = GroupServiceImp.getInstance();
     MessageService messageService = MessageServiceImp.getInstance();
 
-
     static User findUser() {
-
-        // showUsers(userService.getList());
-
-
+        showUsers(userService.getList());
+        /** Search user menu
+         * 1. Name
+         * 2. Username
+         * 3. Role
+         * 4. Status
+         * 0. Back to Menu
+         */
         int choice = MenuUtils.menu(MenuUtils.SEARCH_USER_MENU);
 
         switch (choice) {
             case 1 -> {
                 String name = ScanInput.getStr("Enter name: ");
                 List<User> list = userService.getList(name);
-                if (list.isEmpty()) {
-                    System.out.println("User is not found");
-                    return null;
-                } else {
-                    showUsers(list);
-                    int ind = ScanInput.getInt("choice: ") - 1;
-                    return list.get(ind);
-                }
+                return checkList(list);
             }
             case 2 -> {
-                String username = ScanInput.getStr("enter username: ");
+                String username = ScanInput.getStr("Enter username: ");
                 User user = userService.getUserByUsername(username);
                 if (user != null) {
                     return user;
                 } else {
-                    System.out.println("user is not found");
+                    System.out.println("User is not found");
                     return null;
                 }
             }
             case 3 -> {
-
+                UserRole.showType();
+                int index = ScanInput.getInt("Choose: ") - 1;
+                UserRole userRole = UserRole.getType(index);
+                List<User> list = userService.getList(userRole);
+                return checkList(list);
             }
             case 4 -> {
-
+                StatusType.showType();
+                int index = ScanInput.getInt("Choose: ") - 1;
+                StatusType statusType = StatusType.getType(index);
+                List<User> list = userService.getList(statusType);
+                return checkList(list);
             }
             case 0 -> {
-                break;
+                return null;
             }
             default -> throw new IllegalStateException("Unexpected value: " + choice);
         }
+    }
 
-        return null;
-
+    private static User checkList(List<User> list) {
+        if (list == null) {
+            System.out.println("User is not found");
+            return null;
+        } else {
+            showUsers(list);
+            int ind = ScanInput.getInt("Choice: ") - 1;
+            return list.get(ind);
+        }
     }
 
 
@@ -91,25 +104,36 @@ public interface CommonMenuMethods {
         System.out.println(spaces + chatName + spaces);
 
         for (Message message : messages) {
-            System.out.println(userService.get(message.getAuthorID()).getName() + ": " + message.getContent());
+            System.out.println(userService.get(message.getAuthorID()).getName() +
+                               ": " + message.getContent() + "\t\t\t" + message.getDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy   hh : mm")));
         }
         System.out.println("==========================================================");
     }
 
-
     static void showUsers(List<User> usersList) {
 
-        System.out.println("=".repeat(50));
-        System.out.println("№\t USERNAME \t ROLE \t STATUS \t BIRTHDAY\n");
+        if(usersList == null){
+            System.out.println("user is not found");
+            return;
+        }
+        System.out.printf("""
+                ==========================================================
+                                     USERS LIST  (%d users)
+                ==========================================================
+                """, usersList.size());
+        System.out.println("№\t USERNAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
         for (int i = 0; i < usersList.size(); i++) {
             User user = usersList.get(i);
-            System.out.println(i + 1 + ". \t " + user.getUsername() + " \t   " + user.getRole() + " \t "
-                    + user.getStatus() + " \t " + user.getBirthDay());
+            System.out.println(i + 1 + "." +
+                               " \t " + user.getUsername() +
+                               " \t   " + user.getRole() +
+                               " \t " + user.getStatus() + " " +
+                               "\t " + user.getBirthDay() +
+                               " \t " + userService.getUserAge(user));
         }
         System.out.println("=".repeat(50));
 
     }
-
 
     static void addUser(Group group, User user) {
         boolean b = groupService.addUserInGroup(group.getID(), user.getID());
@@ -209,7 +233,6 @@ public interface CommonMenuMethods {
         }
 
     }
-
 
     static Group getOrCreateGroup(User curUser) {
         List<Group> groups = groupService.getGroups(curUser.getID());

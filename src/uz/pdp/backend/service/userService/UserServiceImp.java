@@ -104,6 +104,31 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public List<User> getGroupUsersList(List<String> usersIDInGroup) {
+
+        List<User> userList = new ArrayList<>();
+        for (User user : users) {
+            if(user.getID().equals())
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> getList(String name) {
+        return null;
+    }
+
+    @Override
+    public List<User> getList(UserRole role) {
+        return null;
+    }
+
+    @Override
+    public List<User> getList(StatusType role) {
+        return null;
+    }
+
+    @Override
     public List<User> getList() {
         return users;
     }
@@ -148,10 +173,5 @@ public class UserServiceImp implements UserService {
         }
         users.add(newUser);
         return true;
-    }
-
-    static int getCountOfUser() {
-        UserService userService = UserServiceImp.getInstance();
-        return userService.getList().size();
     }
 }

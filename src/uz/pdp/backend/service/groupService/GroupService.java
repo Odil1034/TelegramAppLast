@@ -10,7 +10,7 @@ import java.util.List;
 public interface GroupService extends BaseService<Group> {
     List<String> getUsersInGroup(String groupID);
     List<String> getAdminsInGroup(String groupID);
-    List<String> getMessagesInGroup(String groupID);
+    List<String> getMessagesInGroup(String groupOrChatID);
     String getOwnerByGroupId(String groupID);
     String getGroupDescription(String groupID);
 

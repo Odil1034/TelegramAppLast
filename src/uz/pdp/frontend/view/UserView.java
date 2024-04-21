@@ -17,6 +17,16 @@ public class UserView {
 
     public static void profile(User user) {
         curUser = user;
+
+        /**
+         * User menu
+         * 1. Groups
+         * 2. Chats
+         * 3. Channels
+         * 4. My profile
+         * 5. Delete account
+         * 0. Log Out
+         */
         while (true) {
             int choice = MenuUtils.menu(MenuUtils.USER_MENU);
             switch (choice) {
@@ -217,6 +227,21 @@ public class UserView {
             final List<String> usersInGroup = groupService.getUsersInGroup(group.getID());
 
             int menu = MenuUtils.menu(MenuUtils.GROUP_OWNER_MENU);
+            /**
+             * group Owner Menu
+             * 1. Write message
+             * 2. Edit message (only our message)
+             * 3. Delete message (can delete any message)
+             * 4. Add user
+             * 5. Change user role
+             * 6. Show users
+             * 7. Edit group name
+             * 8. Edit description
+             * 9. Kick out user
+             * 10. Delete group
+             * 0. Exit
+             */
+
             switch (menu) {
                 case 1 -> writeNewMessage(group, curUser);
 
@@ -240,23 +265,22 @@ public class UserView {
                         if (n == 1) addUser(group, foundUser);
                         else if (n == 2) return;
                         else System.out.println("wrong choice");
-                    } else throw new RuntimeException("something happen");
+                    } else {
+                        throw new RuntimeException("something happen");
+                    }
                 }
                 case 5 -> {
 
                     List<User> list = userService.getList();
                     showUsers(list);
-
                     // change user role
-
 
                 }
                 case 6 -> {
                     // show user
-                    List<User> users = userService.getList(usersInGroup);
+                    List<User> users = userService.getGroupUsersList(usersInGroup);
                     usersInGroup.addAll(adminsInGroup);
                     showUsers(users);
-
 
                 }
                 case 7 -> {
@@ -302,7 +326,6 @@ public class UserView {
         }
     }
 
-
     private static void groupAdminMenu(Group group) {
         showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
         
@@ -313,6 +336,4 @@ public class UserView {
         showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
         int menu = MenuUtils.menu(MenuUtils.GROUP_USER_MENU);
     }
-
-
 }
