@@ -65,7 +65,7 @@ public class AdminView {
     }
 
     private static void showUsers() {
-        List<User> usersList = userService.getList();
+        List<User> usersList = userService.get;
 
         System.out.println("User List: \n" + "=".repeat(50));
         System.out.println("№\t USERNAME \t ROLE \t STATUS \t BIRTHDAY\n");
