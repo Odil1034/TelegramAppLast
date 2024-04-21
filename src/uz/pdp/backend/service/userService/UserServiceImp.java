@@ -104,36 +104,6 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getGroupUsersList(List<String> usersIDInGroup) {
-
-        List<User> userList = new ArrayList<>();
-        for (User user : users) {
-            if(user.getID().equals())
-        }
-        return null;
-    }
-
-    @Override
-    public List<User> getList(String name) {
-        return null;
-    }
-
-    @Override
-    public List<User> getList(UserRole role) {
-        return null;
-    }
-
-    @Override
-    public List<User> getList(StatusType role) {
-        return null;
-    }
-
-    @Override
-    public List<User> getList() {
-        return users;
-    }
-
-    @Override
     public void update(User changeUser) {
         for (User user : users) {
             if (user.getID().equals(changeUser.getID())) {
@@ -173,5 +143,49 @@ public class UserServiceImp implements UserService {
         }
         users.add(newUser);
         return true;
+    }
+
+    @Override
+    public List<User> getListMatchName(String name) {
+        List<User> userList = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.getName().equals(name)) {
+                userList.add(user);
+            }
+        }
+
+        return userList;
+    }
+
+    @Override
+    public List<User> getListMatchRole(UserRole role) {
+        List<User> userList = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.getRole().equals(role)) {
+                userList.add(user);
+            }
+        }
+
+        return userList;
+    }
+
+    @Override
+    public List<User> getListMatchStatusType(StatusType statusType) {
+        List<User> userList = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.getStatus().equals(statusType)) {
+                userList.add(user);
+            }
+        }
+
+        return userList;
+    }
+
+    @Override
+    public List<User> getList() {
+        return users;
     }
 }

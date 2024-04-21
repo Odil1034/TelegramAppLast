@@ -39,10 +39,11 @@ public class ConsoleUi {
                 case 2 -> {
                     LoginView.signUp();
                 }
-                case 3 -> {
+                case 0 -> {
                     System.out.println("Bye bye 😢😢");
                     System.exit(0);
                 }
+                default -> System.out.println("Wrong choice, try again");
             }
         }
 

@@ -17,9 +17,8 @@ public interface UserService extends BaseService<User> {
     LocalDate makeBirthday(String birthdayStr);
     int getUserAge(User user);
     boolean isValidUsername(String username);
-    List<User> getGroupUsersList(List<String> usersIDInGroup);
-    List<User> getList(String name);
-    List<User> getList(UserRole role);
-    List<User> getList(StatusType role);
+    List<User> getListMatchName(String name);
+    List<User> getListMatchRole(UserRole role);
+    List<User> getListMatchStatusType(StatusType statusType);
     List<User> getList();
 }

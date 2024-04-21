@@ -7,6 +7,7 @@ import uz.pdp.backend.models.user.User;
 import uz.pdp.frontend.utills.MenuUtils;
 import uz.pdp.frontend.utills.ScanInput;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static uz.pdp.frontend.view.CommonMenuMethods.*;
@@ -278,10 +279,14 @@ public class UserView {
                 }
                 case 6 -> {
                     // show user
-                    List<User> users = userService.getGroupUsersList(usersInGroup);
+                    List<String> usersIDInGroup = usersInGroup;
+                    List<User> userList = new ArrayList<>();
+                    for (String userID : usersIDInGroup) {
+                        User user = userService.get(userID);
+                        userList.add(user);
+                    }
+                    showUsers(userList);
                     usersInGroup.addAll(adminsInGroup);
-                    showUsers(users);
-
                 }
                 case 7 -> {
                     // edit group name
@@ -326,14 +331,39 @@ public class UserView {
         }
     }
 
+    private static void showUsers(List<User> userList) {
+
+        if(userList == null){
+            System.out.println("user is not found");
+            return;
+        }
+        System.out.printf("""
+                ==========================================================
+                                     USERS LIST  (%d users)
+                ==========================================================
+                """, userList.size());
+        System.out.println("№\t USERNAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
+        for (int i = 0; i < userList.size(); i++) {
+
+            User user = userList.get(i);
+            System.out.println(i + 1 + "." +
+                               " \t " + user.getUsername() +
+                               " \t   " + user.getRole() +
+                               " \t " + user.getStatus() + " " +
+                               "\t " + user.getBirthDay() +
+                               " \t " + userService.getUserAge(user));
+        }
+        System.out.println("=".repeat(50));
+    }
+
     private static void groupAdminMenu(Group group) {
         showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
         
-        int menu = MenuUtils.menu(MenuUtils.GROUP_ADMIN_MENU);
+        MenuUtils.menu(MenuUtils.GROUP_ADMIN_MENU);
     }
 
     private static void groupUserMenu(Group group) {
         showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
-        int menu = MenuUtils.menu(MenuUtils.GROUP_USER_MENU);
+        MenuUtils.menu(MenuUtils.GROUP_USER_MENU);
     }
 }

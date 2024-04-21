@@ -34,7 +34,7 @@ public interface CommonMenuMethods {
     MessageService messageService = MessageServiceImp.getInstance();
 
     static User findUser() {
-        showUsers(userService.getList());
+//        showUsers(userService.getList());
         /** Search user menu
          * 1. Name
          * 2. Username
@@ -44,10 +44,11 @@ public interface CommonMenuMethods {
          */
         int choice = MenuUtils.menu(MenuUtils.SEARCH_USER_MENU);
 
+        List<User> list;
         switch (choice) {
             case 1 -> {
                 String name = ScanInput.getStr("Enter name: ");
-                List<User> list = userService.getList(name);
+                list = userService.getListMatchName(name);
                 return checkList(list);
             }
             case 2 -> {
@@ -64,14 +65,14 @@ public interface CommonMenuMethods {
                 UserRole.showType();
                 int index = ScanInput.getInt("Choose: ") - 1;
                 UserRole userRole = UserRole.getType(index);
-                List<User> list = userService.getList(userRole);
+                list = userService.getListMatchRole(userRole);
                 return checkList(list);
             }
             case 4 -> {
                 StatusType.showType();
                 int index = ScanInput.getInt("Choose: ") - 1;
                 StatusType statusType = StatusType.getType(index);
-                List<User> list = userService.getList(statusType);
+                list = userService.getListMatchStatusType(statusType);
                 return checkList(list);
             }
             case 0 -> {
@@ -104,8 +105,10 @@ public interface CommonMenuMethods {
         System.out.println(spaces + chatName + spaces);
 
         for (Message message : messages) {
+            DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd/MM/yyyy   hh : mm");
             System.out.println(userService.get(message.getAuthorID()).getName() +
-                               ": " + message.getContent() + "\t\t\t" + message.getDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy   hh : mm")));
+                               ": " + message.getContent() +
+                               "\t\t" + message.getDateTime().format(formatDate));
         }
         System.out.println("==========================================================");
     }
@@ -113,25 +116,27 @@ public interface CommonMenuMethods {
     static void showUsers(List<User> usersList) {
 
         if(usersList == null){
-            System.out.println("user is not found");
-            return;
-        }
-        System.out.printf("""
+            System.out.println("User is not found");
+        }else{
+
+            System.out.printf("""
                 ==========================================================
                                      USERS LIST  (%d users)
                 ==========================================================
                 """, usersList.size());
-        System.out.println("№\t USERNAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
-        for (int i = 0; i < usersList.size(); i++) {
-            User user = usersList.get(i);
-            System.out.println(i + 1 + "." +
-                               " \t " + user.getUsername() +
-                               " \t   " + user.getRole() +
-                               " \t " + user.getStatus() + " " +
-                               "\t " + user.getBirthDay() +
-                               " \t " + userService.getUserAge(user));
+            System.out.println("№\t USERNAME \t NAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
+            for (int i = 0; i < usersList.size(); i++) {
+                User user = usersList.get(i);
+                System.out.println(i + 1 + "." +
+                                   " \t " + user.getUsername() +
+                                   " \t " + user.getName() +
+                                   " \t   " + user.getRole() +
+                                   " \t " + user.getStatus() + " " +
+                                   "\t " + user.getBirthDay() +
+                                   " \t " + userService.getUserAge(user));
+            }
+            System.out.println("=".repeat(50));
         }
-        System.out.println("=".repeat(50));
 
     }
 
@@ -198,7 +203,6 @@ public interface CommonMenuMethods {
             System.out.println("message is deleted");
         } else {
             System.out.println("Only the channel creator can delete the message");
-            return;
         }
     }
 
@@ -400,7 +404,6 @@ public interface CommonMenuMethods {
             message.setContent(txt);
         } else {
             System.out.println("You can only edit your message");
-            return;
         }
     }
 

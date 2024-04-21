@@ -55,15 +55,18 @@ public class AdminView {
          4. Show groups
          0. Log out
          */
-        int menu = MenuUtils.menu(MenuUtils.ADMIN_MENU);
         while (true) {
+            int menu = MenuUtils.menu(MenuUtils.ADMIN_MENU);
             switch (menu) {
                 case 1 -> showUsers(userService.getList());
                 case 2 -> searchUser();
                 case 3 -> AdminView.showChannels();
                 case 4 -> showGroups();
                 case 0 -> {
-                    return;
+                    int change = ScanInput.getInt("Are you  want to exit of your profile? \n 1. Yes \n 2. No");
+                    if (change == 1) {
+                        return;
+                    }
                 }
                 default -> {
                     System.out.println("Wrong choice menu, try again ❌❌❌");
@@ -77,8 +80,8 @@ public class AdminView {
         List<Group> groupList = groupService.getList();
         for (int i = 0; i < groupList.size(); i++) {
             Group group = groupList.get(i);
-            int countOfSubscribes = groupService.getUsersInGroup(String.valueOf(groupList.get(i))).size();
-            ;
+            List<String> users = groupService.getUsersInGroup(group.getID());
+            int countOfSubscribes = users.size();
 
             String ownerID = groupService.getOwnerByGroupId(group.getID());
             User owner = userService.get(ownerID);
@@ -97,7 +100,8 @@ public class AdminView {
          5. Unblock user
          0. back to menu
          */
-        while (true){
+        while (true) {
+            System.out.println("User : " + user.getUsername());
             int menu = MenuUtils.menu(MenuUtils.USER_CONTROL_MENU);
             switch (menu) {
                 case 1 -> showUserInfo(user);
@@ -134,7 +138,7 @@ public class AdminView {
     private static void showUserGroups(User user) {
         System.out.printf("""
                 ==========================================================
-                                        USER %S GROUPS
+                                        %S GROUPS
                 ==========================================================
                 """, user.getUsername());
 
@@ -158,21 +162,29 @@ public class AdminView {
     }
 
     private static void showUserChannels(User user) {
-        System.out.printf("""
-                ==========================================================
-                                        USER %S CHANNELS
-                ==========================================================
-                """, user.getUsername());
 
         List<Channel> channels = channelService.getChannels(user.getID());
-        for (int i = 0; i < channels.size(); i++) {
-            Channel channel = channels.get(i);
-            User authorChannel = userService.get(channel.getAuthorID());
-            System.out.println(i + 1 + ". " + channel.getName() + "\t" + authorChannel.getUsername());
-        }
+        if (channels != null) {
+            int countOfChannels = channels.size();
 
-        int channelInd = ScanInput.getInt("Choose channel: ") - 1;
-        EnterChannel(channels.get(channelInd));
+            System.out.printf("""
+                    ==========================================================
+                                   %S CHANNELS (%d channels)
+                    ==========================================================
+                    """, user.getUsername(), countOfChannels);
+
+            for (int i = 0; i < channels.size(); i++) {
+                Channel channel = channels.get(i);
+                User authorChannel = userService.get(channel.getAuthorID());
+                System.out.println(i + 1 + ". " + channel.getName() +
+                                   "\t" + authorChannel.getUsername());
+            }
+
+            int channelInd = ScanInput.getInt("Choose channel: ") - 1;
+            EnterChannel(channels.get(channelInd));
+        } else {
+            System.out.println(user.getUsername() + " does not have a channel");
+        }
     }
 
     private static void EnterChannel(Channel channel) {
@@ -201,8 +213,16 @@ public class AdminView {
 
 
     private static void showChannels() {
-        System.out.println("EXIST CHANNELS: \n" + "=".repeat(50));
         List<Channel> channelList = channelService.getList();
+        if (channelList == null){
+            return;
+        }
+        System.out.printf("""
+                ==========================================================\s
+                                ALL EXIST CHANNELS (%d channel)\s
+                ==========================================================""",
+                channelList.size());
+
         int countOfSubscribes = 0;
         List<User> userList = userService.getList();
         for (int i = 0; i < channelList.size(); i++) {
@@ -212,12 +232,13 @@ public class AdminView {
                 countOfSubscribes++;
             }
             User author = userService.get(channel.getAuthorID());
-            System.out.println(i + 1 + ". " + channel.getName() + "   " + author.getUsername() + "   " +
-                               countOfSubscribes + "subscribes");
+            System.out.println(i + 1 + ". " + channel.getName() + "   " + author.getUsername() +
+                               "   (" + countOfSubscribes + "  subscribes)");
         }
     }
 
     private static void searchUser() {
+        showUsers(userService.getList());
         System.out.println("""
                 ==========================================================
                                         SEARCH USER
@@ -244,9 +265,9 @@ public class AdminView {
                         break;
                     }
                 }
-                if(searchingUser != null){
+                if (searchingUser != null) {
                     UserControl(searchingUser);
-                }else {
+                } else {
                     System.out.println("User is not found ❌❌❌");
                 }
             }
@@ -258,9 +279,9 @@ public class AdminView {
                         break;
                     }
                 }
-                if(searchingUser != null){
+                if (searchingUser != null) {
                     UserControl(searchingUser);
-                }else {
+                } else {
                     System.out.println("User is not found ❌❌❌");
                 }
             }
