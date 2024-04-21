@@ -7,31 +7,28 @@ import uz.pdp.backend.types.user.UserRole;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class UserServiceImp implements UserService {
 
-    List<User> users;
+    List<User> userList;
 
     private UserServiceImp() {
-        this.users = new ArrayList<>();
+        this.userList = new ArrayList<>();
 
-        users.add(new User("admin1", "admin1",
+        userList.add(new User("admin1", "admin1",
                 LocalDate.of(2001, Month.AUGUST, 7), "admin",
-                "qwerty",  UserRole.ADMIN, StatusType.ACTIVE));
+                "qwerty", UserRole.ADMIN, StatusType.ACTIVE));
 
-        users.add(new User("user1", "user1",
+        userList.add(new User("user1", "user1",
                 LocalDate.of(2002, Month.JANUARY, 1), "user1",
                 "qwerty", UserRole.USER, StatusType.ACTIVE));
 
-        users.add(new User("user2", "user2",
+        userList.add(new User("user2", "user2",
                 LocalDate.of(2003, Month.DECEMBER, 3), "user2",
                 "qwerty", UserRole.USER, StatusType.ACTIVE));
 
-        users.add(new User("user4", "user4",
+        userList.add(new User("user4", "user4",
                 LocalDate.of(2004, Month.FEBRUARY, 28), "user3",
                 "qwerty", UserRole.USER, StatusType.ACTIVE));
     }
@@ -48,9 +45,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean create(User newUser) {
-        for (User user : users) {
+        for (User user : userList) {
             if (user.getUsername().equals(newUser.getUsername()) &&
-                user.getPassword().equals(newUser.getPassword())) {
+                    user.getPassword().equals(newUser.getPassword())) {
                 return false;
             }
         }
@@ -59,7 +56,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User get(String userID) {
-        for (User user : users) {
+        for (User user : userList) {
             if (user.getID().equals(userID)) {
                 return user;
             }
@@ -69,8 +66,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)){
+        for (User user : userList) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
@@ -98,8 +95,8 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean isValidUsername(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username) || username.isBlank() || username.isEmpty()){
+        for (User user : userList) {
+            if (user.getUsername().equals(username) || username.isBlank() || username.isEmpty()) {
                 return false;
             }
         }
@@ -107,23 +104,71 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public List<User> getList(List<String> usersID) {
+        List<User> result = new ArrayList<>();
+
+        for (User user : userList) {
+            if (usersID.contains(user.getID())) {
+                result.add(user);
+            }
+        }
+
+        return result;
+    }
+
+
+    @Override
+    public List<User> getList(String name) {
+        List<User> result = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getName().equals(name)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getList(UserRole role) {
+        List<User> result = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getRole().equals(role)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getList(StatusType status) {
+        List<User> result = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getStatus().equals(status)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+
+    @Override
     public List<User> getList() {
-        return users;
+        return userList;
     }
 
     @Override
     public void update(User changeUser) {
-        for (User user : users) {
+        for (User user : userList) {
             if (user.getID().equals(changeUser.getID())) {
-                int ind = users.indexOf(user);
-                users.set(ind, changeUser);
+                int ind = userList.indexOf(user);
+                userList.set(ind, changeUser);
             }
         }
     }
 
     @Override
     public boolean delete(String userID) {
-        for (User user : users) {
+        for (User user : userList) {
             if (user.getID().equals(userID)) {
                 user.setIsDelete(true);
             }
@@ -132,10 +177,10 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User  login(LoginDTO loginDTO) {
-        for (User user : users) {
+    public User login(LoginDTO loginDTO) {
+        for (User user : userList) {
             if (user.getUsername().equals(loginDTO.username()) &&
-                user.getPassword().equals(loginDTO.password())) {
+                    user.getPassword().equals(loginDTO.password())) {
                 return user;
             }
         }
@@ -144,12 +189,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     public boolean signUp(User newUser) {
-        for (User user1 : users) {
-            if(Objects.equals(user1, newUser)){
+        for (User user1 : userList) {
+            if (Objects.equals(user1, newUser)) {
                 return false;
             }
         }
-        users.add(newUser);
+        userList.add(newUser);
         return true;
     }
 }

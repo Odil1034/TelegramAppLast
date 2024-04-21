@@ -3,6 +3,8 @@ package uz.pdp.backend.service.userService;
 import uz.pdp.backend.DTO.LoginDTO;
 import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.service.BaseService;
+import uz.pdp.backend.types.user.StatusType;
+import uz.pdp.backend.types.user.UserRole;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,4 +16,10 @@ public interface UserService extends BaseService<User> {
     User getUserByUsername(String username);
     LocalDate makeBirthday(String birthdayStr);
     boolean isValidUsername(String username);
+
+
+    List<User> getList(List<String> userID);
+    List<User> getList(String name);
+    List<User> getList(UserRole role);
+    List<User> getList(StatusType role);
 }
