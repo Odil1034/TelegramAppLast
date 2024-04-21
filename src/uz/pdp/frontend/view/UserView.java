@@ -237,16 +237,26 @@ public class UserView {
                                  2.no
                                  ==========================================================""");
 
-                        if (n == 1) addUser(group, foundUser);
-                        else if (n == 2) return;
-                        else System.out.println("wrong choice");
-                    } else throw new RuntimeException("something happen");
+                        if (n == 1) {
+                            addUser(group, foundUser);
+                        }
+                        else if (n == 2){
+                            continue;
+                        } else {
+                            System.out.println("wrong choice");
+                            continue;
+                        }
+                    } else {
+                        System.out.println("user not found");
+                        continue;
+                    }
+
                 }
                 case 5 -> {
 
                     List<User> list = userService.getList();
                     showUsers(list);
-
+                    
                     // change user role
 
 
