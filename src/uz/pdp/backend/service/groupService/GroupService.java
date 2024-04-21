@@ -10,7 +10,7 @@ public interface GroupService extends BaseService<Group> {
     List<String> getUsersInGroup(String groupID);
     List<String> getAdminsInGroup(String groupID);
     List<String> getMessagesInGroup(String groupID);
-    String getOwnerUserId(String groupID);
+    String getOwnerByGroupId(String groupID);
     String getGroupDescription(String groupID);
 
     boolean addUserInGroup(String groupID, String userID);

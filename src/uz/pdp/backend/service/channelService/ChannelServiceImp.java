@@ -48,14 +48,14 @@ public class ChannelServiceImp implements ChannelService{
     }
 
     @Override
-    public void update(Channel newM) {
-        //???
+    public void update(Channel newChannel) {
+//        ???
     }
 
     @Override
-    public boolean delete(String ID) {
+    public boolean delete(String channelID) {
         for (Channel channel : channelList) {
-            if (channel.getID().equals(ID)){
+            if (channel.getID().equals(channelID)){
                 channelList.remove(channel);
                 return true;
             }
@@ -67,7 +67,6 @@ public class ChannelServiceImp implements ChannelService{
     public boolean writeContent(String channelId, String messageId) {
         List<String> messages = messagesInChannels.get(channelId);
        return messages.add(messageId);
-
     }
 
     @Override

@@ -6,8 +6,6 @@ import java.util.*;
 
 public class GroupServiceImp implements GroupService {
     private static GroupServiceImp groupService;
-
-
     private final List<Group> groupList; // all groups list
     private final Map<String, Set<String>> usersInGroup;  /// <groupID, < List<usersID> >
     private final Map<String, Set<String>> adminsInGroup; /// <groupID, < List<adminsID> >
@@ -92,7 +90,7 @@ public class GroupServiceImp implements GroupService {
     }
 
     @Override
-    public String getOwnerUserId(String groupID) {
+    public String getOwnerByGroupId(String groupID) {
         for (Group group : groupList) {
             if (group.getID().equals(groupID)) {
                 return group.getOwnerID();
