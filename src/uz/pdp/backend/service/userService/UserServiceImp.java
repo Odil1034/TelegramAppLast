@@ -7,10 +7,9 @@ import uz.pdp.backend.types.user.UserRole;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class UserServiceImp implements UserService {
 
@@ -21,7 +20,7 @@ public class UserServiceImp implements UserService {
 
         users.add(new User("admin1", "admin1",
                 LocalDate.of(2001, Month.AUGUST, 7), "admin",
-                "qwerty",  UserRole.ADMIN, StatusType.ACTIVE));
+                "qwerty", UserRole.ADMIN, StatusType.ACTIVE));
 
         users.add(new User("user1", "user1",
                 LocalDate.of(2002, Month.JANUARY, 1), "user1",
@@ -70,7 +69,7 @@ public class UserServiceImp implements UserService {
     @Override
     public User getUserByUsername(String username) {
         for (User user : users) {
-            if (user.getUsername().equals(username)){
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
@@ -79,27 +78,25 @@ public class UserServiceImp implements UserService {
 
     @Override
     public LocalDate makeBirthday(String birthdayStr) {
-        /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(birthdayStr, formatter);
+    }
 
-        Date date = null;
-        try {
-            date = simpleDateFormat.parse(birthdayStr);
-        } catch (ParseException e) {
+    public int getUserAge(User user) {
+        int age;
 
-        }
-        LocalDate localDate = null;
-        if(date!=null){
-            localDate = LocalDate.parse((CharSequence) date);
-        }
+        LocalDate birthDay = user.getBirthDay();
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(birthDay, now);
+        age = period.getYears();
 
-        return localDate;*/
-        return null;
+        return age;
     }
 
     @Override
     public boolean isValidUsername(String username) {
         for (User user : users) {
-            if (user.getUsername().equals(username) || username.isBlank() || username.isEmpty()){
+            if (user.getUsername().equals(username) || username.isBlank() || username.isEmpty()) {
                 return false;
             }
         }
@@ -132,7 +129,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User  login(LoginDTO loginDTO) {
+    public User login(LoginDTO loginDTO) {
         for (User user : users) {
             if (user.getUsername().equals(loginDTO.username()) &&
                 user.getPassword().equals(loginDTO.password())) {
@@ -145,7 +142,7 @@ public class UserServiceImp implements UserService {
     @Override
     public boolean signUp(User newUser) {
         for (User user1 : users) {
-            if(Objects.equals(user1, newUser)){
+            if (Objects.equals(user1, newUser)) {
                 return false;
             }
         }
@@ -153,7 +150,7 @@ public class UserServiceImp implements UserService {
         return true;
     }
 
-    static int getCountOfUser(){
+    static int getCountOfUser() {
         UserService userService = UserServiceImp.getInstance();
         return userService.getList().size();
     }

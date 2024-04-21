@@ -249,7 +249,6 @@ public class UserView {
         int menu = MenuUtils.menu(MenuUtils.GROUP_USER_MENU);
     }
 
-
    /* private static void writeMessage(BaseModel chat, String chatName) {
         while (true) {
             showMessages(messageService.getMessagesByChatID(chat.getID()), chatName);
@@ -350,12 +349,8 @@ public class UserView {
                     3.Exit
                     ==========================================================""");
             switch (menu) {
-                case 1 -> {
-                    writeNewMessage(chat);
-                }
-
+                case 1 -> writeNewMessage(chat);
                 case 2 -> editMessage(chat);
-
                 case 3 -> {
                     return;
                 }
