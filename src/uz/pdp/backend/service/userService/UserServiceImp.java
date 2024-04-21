@@ -203,8 +203,27 @@ public class UserServiceImp implements UserService {
         return result;
     }
 
+    @Override
+    public List<User> getUserListByRole(UserRole role) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (Objects.equals(user.getRole(), role)){
+                result.add(user);
+            }
+        }
+        return result;
+    }
 
-
+    @Override
+    public List<User> getUserListByStatus(StatusType status) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (Objects.equals(user.getStatus(), status)){
+                result.add(user);
+            }
+        }
+        return result;
+    }
 
 
 }

@@ -54,28 +54,81 @@ public interface CommonMenuMethods {
                 }
             }
             case 2 -> {
-                String username = ScanInput.getStr("enter username: ");
+                String username = ScanInput.getStr("Enter username: ");
                 User user = userService.getUserByUsername(username);
                 if (user != null) {
                     return user;
                 } else {
-                    System.out.println("user is not found");
+                    System.out.println("User is not found");
                     return null;
                 }
             }
             case 3 -> {
+                UserRole role;
+                int ch = MenuUtils.menu("""
+                        ==========================================================
+                        Choice user role
+                        1.Admin
+                        2.User
+                        ==========================================================""");
+                if (ch == 1) {
+                    role = UserRole.ADMIN;
+                } else if (ch == 2) {
+                    role = UserRole.USER;
+                } else {
+                    System.out.println("wrong choice");
+                    return null;
+                }
 
+                List<User> userListByRole = userService.getUserListByRole(role);
+                if (userListByRole.isEmpty()) {
+                    System.out.println("Users with the specified role are not found");
+                    return null;
+                } else {
+                    showUsers(userListByRole);
+                    int ind = ScanInput.getInt("Choice: ") - 1;
+                    if (ind < 0 || ind >= userListByRole.size()) {
+                        System.out.println("Wrong choice");
+                        return null;
+                    }
+                    return userListByRole.get(ind);
+                }
             }
             case 4 -> {
-
+                StatusType status;
+                int ch = MenuUtils.menu("""
+                        ==========================================================
+                        Choice user status
+                        1.Active,
+                        2.Deleted,
+                        3.Blocked;
+                        ==========================================================""");
+                if (ch == 1) {
+                    status = StatusType.ACTIVE;
+                } else if (ch == 2) {
+                    status = StatusType.DELETED;
+                } else if (ch == 3) {
+                    status = StatusType.BLOCKED;
+                } else {
+                    System.out.println("wrong choice");
+                    return null;
+                }
+                List<User> userListByStatus = userService.getUserListByStatus(status);
+                if (userListByStatus.isEmpty()) {
+                    System.out.println("Users with the specified status are not found");
+                    return null;
+                } else {
+                    showUsers(userListByStatus);
+                    int ind = ScanInput.getInt("Choice: ") - 1;
+                    return userListByStatus.get(ind);
+                }
             }
             case 0 -> {
-                break;
+                return null;
             }
             default -> throw new IllegalStateException("Unexpected value: " + choice);
         }
 
-        return null;
 
     }
 
@@ -174,7 +227,7 @@ public interface CommonMenuMethods {
             System.out.println("message is deleted");
         } else {
             System.out.println("Only the channel creator can delete the message");
-            return;
+
         }
     }
 
@@ -360,6 +413,17 @@ public interface CommonMenuMethods {
 
     }
 
+    static void showChannels(List<Channel> channels) {
+        System.out.println("==========================================================");
+        int i = 1;
+        for (Channel channel : channels) {
+            System.out.println(i + ". " + channel.getName());
+            i++;
+        }
+        System.out.println("==========================================================");
+
+    }
+
 
     static void editMessage(BaseModel chat, User curUser) {
 
@@ -377,7 +441,6 @@ public interface CommonMenuMethods {
             message.setContent(txt);
         } else {
             System.out.println("You can only edit your message");
-            return;
         }
     }
 
@@ -394,7 +457,7 @@ public interface CommonMenuMethods {
         String lastName = user.getLastName();
         LocalDate birthDay = user.getBirthDay();
         String username = user.getUsername();
-       // String password = user.getPassword();
+        // String password = user.getPassword();
         UserRole role = user.getRole();
         StatusType status = user.getStatus();
 
@@ -452,6 +515,19 @@ public interface CommonMenuMethods {
         }
     }
 
+    static void showGroups(List<Group> groups) {
+        System.out.println("EXIST GROUPS: \n" + "=".repeat(50));
+        int j = 1;
+        for (Group group : groups) {
+            int countOfUsers = groupService.getCountOfUsersInGroup(group.getID());
+            String ownerID = group.getOwnerID();
+            User owner = userService.get(ownerID);
+            System.out.println(j + 1 + ". GroupName: " + group.getName() +
+                    " Owner: " + owner.getUsername() +
+                    "   " + countOfUsers + " subscribes");
 
+        }
+        System.out.println("=".repeat(50));
+    }
 
 }

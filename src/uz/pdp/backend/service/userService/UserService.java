@@ -23,4 +23,8 @@ public interface UserService extends BaseService<User> {
     List<User> getList(String name);
     List<User> getList(UserRole role);
     List<User> getList(StatusType role);
+
+    List<User> getUserListByRole(UserRole role);
+
+    List<User> getUserListByStatus(StatusType status);
 }

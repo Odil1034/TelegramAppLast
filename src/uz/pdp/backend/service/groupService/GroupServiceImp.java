@@ -1,7 +1,6 @@
 package uz.pdp.backend.service.groupService;
 
 import uz.pdp.backend.models.group.Group;
-import uz.pdp.backend.models.message.Message;
 
 import java.util.*;
 
@@ -90,15 +89,7 @@ public class GroupServiceImp implements GroupService {
         return messagesInGroup.get(groupID);
     }
 
-    @Override
-    public String getOwnerByGroupId(String groupID) {
-        for (Group group : groupList) {
-            if (group.getID().equals(groupID)) {
-                return group.getOwnerID();
-            }
-        }
-        return null;
-    }
+
 
     @Override
     public String getGroupDescription(String groupID) {
@@ -142,5 +133,10 @@ public class GroupServiceImp implements GroupService {
             }
         }
         return groups;
+    }
+
+    @Override
+    public int getCountOfUsersInGroup(String groupID) {
+        return usersInGroup.get(groupID).size();
     }
 }
