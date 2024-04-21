@@ -154,4 +154,57 @@ public class UserServiceImp implements UserService {
         UserService userService = UserServiceImp.getInstance();
         return userService.getList().size();
     }
+
+
+    @Override
+    public List<User> getList(List<String> usersID) {
+        List<User> result = new ArrayList<>();
+
+        for (User user : users) {
+            if (usersID.contains(user.getID())) {
+                result.add(user);
+            }
+        }
+
+        return result;
+    }
+
+
+    @Override
+    public List<User> getList(String name) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getName().equals(name)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getList(UserRole role) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getRole().equals(role)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getList(StatusType status) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getStatus().equals(status)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+
+
+
+
 }
