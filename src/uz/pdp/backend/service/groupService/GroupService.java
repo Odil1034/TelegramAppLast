@@ -6,11 +6,10 @@ import uz.pdp.backend.service.BaseService;
 
 
 import java.util.List;
-import java.util.Set;
 
 public interface GroupService extends BaseService<Group> {
-    Set<String> getUsersInGroup(String groupID);
-    Set<String> getAdminsInGroup(String groupID);
+    List<String> getUsersInGroup(String groupID);
+    List<String> getAdminsInGroup(String groupID);
     List<String> getMessagesInGroup(String groupID);
     String getOwnerByGroupId(String groupID);
     String getGroupDescription(String groupID);

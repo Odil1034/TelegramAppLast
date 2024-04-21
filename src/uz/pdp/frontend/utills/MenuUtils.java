@@ -145,6 +145,28 @@ public interface MenuUtils {
             0. Exit
             ==========================================================""";
 
+
+    String SEARCH_USER_MENU = """
+            ==========================================================
+                               SEARCH USER BY FIELDS
+            ==========================================================
+            1. Name
+            2. Username
+            3. Role
+            4. Status
+            0. Back to Menu
+            ==========================================================""";
+
+
+    String USER_PROFILE_SETTINGS = """
+            ==========================================================
+            1.Change first name
+            2.Change last name
+            3.Change birth date
+            4.Change username
+            0.Exit
+            ==========================================================""";
+
     static int menu(String menu) {
         System.out.println(menu);
         return ScanInput.getInt("Choice: ");

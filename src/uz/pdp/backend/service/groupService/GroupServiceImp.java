@@ -76,13 +76,13 @@ public class GroupServiceImp implements GroupService {
 
 
     @Override
-    public Set<String> getUsersInGroup(String groupID) {
-        return usersInGroup.get(groupID);
+    public List<String> getUsersInGroup(String groupID) {
+        return new ArrayList<>(usersInGroup.get(groupID));
     }
 
     @Override
-    public Set<String> getAdminsInGroup(String groupID) {
-        return adminsInGroup.get(groupID);
+    public List<String> getAdminsInGroup(String groupID) {
+        return new ArrayList<>(adminsInGroup.get(groupID));
     }
 
     @Override
