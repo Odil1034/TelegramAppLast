@@ -7,6 +7,7 @@ import uz.pdp.backend.types.user.UserRole;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Objects;
 
 public class User extends BaseModel {
 
@@ -88,6 +89,18 @@ public class User extends BaseModel {
 
     public String getBirthdayStr(){
         return birthDay.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(getUsername(), user.getUsername()) && Objects.equals(super.getID(), user.getID());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername(), super.getID());
     }
 
     @Override
