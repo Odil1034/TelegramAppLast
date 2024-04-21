@@ -24,7 +24,6 @@ import uz.pdp.frontend.utills.ScanInput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 public class UserView {
     private static final UserService userService = UserServiceImp.getInstance();
@@ -42,14 +41,14 @@ public class UserView {
                 case 1 -> {
                     Group group = getOrCreateGroup();
                     if (group == null) break;
-                  //  showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
+                    showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
                     groupMenu(group);
                 }
                 case 2 -> {
                     Chat chat = showOrCreateChat();
                     if (chat != null) {
                         String name = chatService.determineChatName(chat.getID(), curUser.getID());
-                      //   List<Message> messages = messageService.getMessagesByChatID(chat.getID());
+                        List<Message> messages = messageService.getMessagesByChatID(chat.getID());
                         writeMessageOnChat(chat, name);
                     } else {
                         System.out.println("something wrong");
@@ -57,10 +56,10 @@ public class UserView {
                     }
                 }
                 case 3 -> {
-                    showChannels();
+                    List<Channel> channels = showChannels();
                 }
                 case 4 -> {
-                    showProfile(curUser);
+                    showProfile();
                     ///....
                 }
                 case 0 -> {
@@ -79,7 +78,7 @@ public class UserView {
         String curUserID = curUser.getID();
         String groupID = group.getID();
         String ownerID = group.getOwnerID();
-        Set<String> adminsInGroup = groupService.getAdminsInGroup(groupID);
+        List<String> adminsInGroup = groupService.getAdminsInGroup(groupID);
 
         if (curUserID.equals(ownerID)) {
             groupOwnerMenu(group);
@@ -124,25 +123,18 @@ public class UserView {
                 }
                 case 6 -> {
                     // show user
-                    Set<String> usersInGroup = groupService.getUsersInGroup(group.getID());
-                    usersInGroup.addAll(groupService.getAdminsInGroup(group.getID()));
+                    List<String> usersInGroup = groupService.getUsersInGroup(group.getID());
+                    usersInGroup.addAll( 0, groupService.getAdminsInGroup(group.getID()));
                     showUsers(usersInGroup);
                 }
                 case 7 -> {
                     // edit group name
-                    String newName = ScanInput.getStr("enter new group name: ");
-                    group.setName(newName);
-                    System.out.println("group name is changed");
                 }
                 case 8 -> {
                     // edit description
-                    String newDescription = ScanInput.getStr("enter new group description: ");
-                    group.setDescription(newDescription);
                 }
                 case 9 -> {
                     // kick out user
-                    Set<String> usersInGroup = groupService.getUsersInGroup(group.getID());
-
                 }
                 case 10 -> {
                     // delete group
@@ -150,12 +142,11 @@ public class UserView {
                 case 0 -> {
                     return;
                 }
-                default -> throw new IllegalStateException("Unexpected value: " + menu);
             }
         }
     }
 
-    private static void showUsers(Set<String> usersID) {
+    private static void showUsers(List<String> usersID) {
         int i = 1;
         for (String userID : usersID) {
             User user = userService.get(userID);
@@ -240,17 +231,15 @@ public class UserView {
     }
 
     private static void groupAdminMenu(Group group) {
-        showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
         int menu = MenuUtils.menu(MenuUtils.GROUP_ADMIN_MENU);
     }
 
     private static void groupUserMenu(Group group) {
-        showMessages(messageService.getMessagesByChatID(group.getID()), group.getName());
         int menu = MenuUtils.menu(MenuUtils.GROUP_USER_MENU);
     }
 
 
-   /* private static void writeMessage(BaseModel chat, String chatName) {
+    private static void writeMessage(BaseModel chat, String chatName) {
         while (true) {
             showMessages(messageService.getMessagesByChatID(chat.getID()), chatName);
             int menu = MenuUtils.menu("""
@@ -259,7 +248,7 @@ public class UserView {
                     1.Write new message
                     2.Edit message
                     3.Add user
-                    0.Exit
+                    4.Exit
                     ==========================================================""");
             switch (menu) {
                 case 1 -> {
@@ -310,14 +299,16 @@ public class UserView {
                             System.out.println("wrong choice");
                             return;
                         }
+
+
                     }
                 }
-                case 0 -> {
+                case 4 -> {
                     return;
                 }
             }
         }
-    }*/
+    }
 
     private static void editMessage(BaseModel chat) {
 
@@ -369,10 +360,10 @@ public class UserView {
         messageService.create(newMessage);
     }
 
-    private static void editProfile(User user) {
+    private static void editProfile() {
         System.out.println("Settings");
 
-        showProfile(user);
+        showProfile();
 
         while (true) {
             String settings = """
@@ -388,24 +379,24 @@ public class UserView {
             switch (menu) {
                 case 1 -> {
                     String firstName = ScanInput.getStr("enter new first name: ");
-                    user.setName(firstName);
+                    curUser.setName(firstName);
                     System.out.println("first name is changed");
                 }
                 case 2 -> {
                     String lastName = ScanInput.getStr("enter new last name: ");
-                    user.setName(lastName);
+                    curUser.setName(lastName);
                     System.out.println("last name is changed");
                 }
                 case 3 -> {
                     String date = ScanInput.getStr("enter your new birth date: ");
                     LocalDate localDate = userService.makeBirthday(date);
-                    user.setBirthDay(localDate);
+                    curUser.setBirthDay(localDate);
                     System.out.println("your birth date was changed success");
                 }
                 case 4 -> {
                     String username = ScanInput.getStr("enter new username: ");
                     if (userService.isValidUsername(username)) {
-                        user.setUsername(username);
+                        curUser.setUsername(username);
                         System.out.println("username success changed");
                     } else {
                         System.out.println("entered invalid username");
@@ -421,15 +412,14 @@ public class UserView {
         }
     }
 
-
-    private static void showProfile(User user) {
-        String name = user.getName();
-        String lastName = user.getLastName();
-        LocalDate birthDay = user.getBirthDay();
-        String username = user.getUsername();
-        String password = user.getPassword();
-        UserRole role = user.getRole();
-        StatusType status = user.getStatus();
+    private static void showProfile() {
+        String name = curUser.getName();
+        String lastName = curUser.getLastName();
+        LocalDate birthDay = curUser.getBirthDay();
+        String username = curUser.getUsername();
+        String password = curUser.getPassword();
+        UserRole role = curUser.getRole();
+        StatusType status = curUser.getStatus();
 
         System.out.println("==========================================================");
         System.out.println("Account Status: " + status);
@@ -440,7 +430,6 @@ public class UserView {
         System.out.println("User role: " + role);
         System.out.println("==========================================================");
     }
-
 
     private static Channel createChannel() {
         String channelName, description;
@@ -459,7 +448,6 @@ public class UserView {
         }
         return channel;
     }
-
 
     private static Group createGroup() {
         String groupName, description;
@@ -480,7 +468,6 @@ public class UserView {
         return group;
     }
 
-
     private static List<Channel> showChannels() {
         List<Channel> channels = channelService.getChannels(curUser.getID());
         int i = 1;
@@ -492,7 +479,6 @@ public class UserView {
         }
         return channels;
     }
-
 
     private static Group getOrCreateGroup() {
         List<Group> groups = groupService.getGroups(curUser.getID());
@@ -518,8 +504,9 @@ public class UserView {
             choice--;
             return groups.get(choice);
         }
-    }
 
+
+    }
 
     private static Chat showOrCreateChat() {
         List<Chat> allUsersChat = chatService.getAllUsersChatsByUserID(curUser.getID());
@@ -556,8 +543,8 @@ public class UserView {
         } else {
             return allUsersChat.get(choice);
         }
-    }
 
+    }
 
     private static Chat createChat() {
         User findUser = findUser();
@@ -579,7 +566,6 @@ public class UserView {
 
     }
 
-
     private static User findUser() {
         System.out.println("find user");
         String username = ScanInput.getStr("enter username: ");
@@ -595,10 +581,7 @@ public class UserView {
 
     private static void showMessages(List<Message> messages, String chatName) {
         System.out.println("\n==========================================================");
-        int spacesCount = (60 - chatName.length()) / 2;
-        String spaces = " ".repeat(spacesCount);
-        System.out.println(spaces + chatName + spaces);
-
+        System.out.println(chatName);
         for (Message message : messages) {
             System.out.println(userService.get(message.getAuthorID()).getName() + ": " + message.getContent());
         }

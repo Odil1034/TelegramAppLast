@@ -2,15 +2,18 @@ package uz.pdp.backend.service.groupService;
 
 import uz.pdp.backend.models.group.Group;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GroupServiceImp implements GroupService {
     private static GroupServiceImp groupService;
 
 
     private final List<Group> groupList; // all groups list
-    private final Map<String, Set<String>> usersInGroup;  /// <groupID, < List<usersID> >
-    private final Map<String, Set<String>> adminsInGroup; /// <groupID, < List<adminsID> >
+    private final Map<String, List<String>> usersInGroup;  /// <groupID, < List<usersID> >
+    private final Map<String, List<String>> adminsInGroup; /// <groupID, < List<adminsID> >
     private final Map<String, List<String>> messagesInGroup; /// <groupID, < List<MessagesID> >
 
 
@@ -34,11 +37,11 @@ public class GroupServiceImp implements GroupService {
         String groupID = group.getID();
         groupList.add(group);
 
-        Set<String> userList = new HashSet<>();
-        Set<String> adminList = new HashSet<>();
+        List<String> userList = new ArrayList<>();
+        List<String> adminList = new ArrayList<>();
         List<String> messageList = new ArrayList<>();
 
-        userList.add(group.getOwnerID());
+        boolean add = userList.add(group.getOwnerID());
 
         usersInGroup.put(groupID, userList);
         adminsInGroup.put(groupID, adminList);
@@ -77,12 +80,12 @@ public class GroupServiceImp implements GroupService {
 
 
     @Override
-    public Set<String> getUsersInGroup(String groupID) {
+    public List<String> getUsersInGroup(String groupID) {
         return usersInGroup.get(groupID);
     }
 
     @Override
-    public Set<String> getAdminsInGroup(String groupID) {
+    public List<String> getAdminsInGroup(String groupID) {
         return adminsInGroup.get(groupID);
     }
 
