@@ -7,6 +7,7 @@ import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface UserService extends BaseService<User> {
 
