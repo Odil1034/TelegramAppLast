@@ -1,5 +1,8 @@
 package uz.pdp.frontend.utills;
 
+import uz.pdp.backend.service.userService.UserService;
+import uz.pdp.backend.service.userService.UserServiceImp;
+
 public interface MenuUtils {
 
     // main Menu
@@ -7,8 +10,8 @@ public interface MenuUtils {
             ==========================================================
                                    MAIN MENU
             ==========================================================
-            1. Log In\s
-            2. Sign Up\s
+            1. Log In
+            2. Sign Up
             3. Exit
             ==========================================================""";
 
@@ -26,6 +29,7 @@ public interface MenuUtils {
      * 4. show groups: hama grupalani korish
      *  i telegramda nimadur qisa shulani yozish kere
      * */
+
     String ADMIN_MENU = """
             ==========================================================
                                    ADMIN MENU
@@ -34,8 +38,8 @@ public interface MenuUtils {
             2. Search user
             3. Show channels
             4. Show groups
-            5...
-            6...
+            5. Show blocked users
+            6. Show deleted users
             0. Log out
             ==========================================================""";
     String USER_CONTROL_MENU = """
@@ -54,11 +58,12 @@ public interface MenuUtils {
             ==========================================================
                                      USER MENU
             ==========================================================
-            1. Groups\s
-            2. Chats\s
-            3. Channels\s
-            4. My profile\s
-            0. Log Out\s
+            1. Groups
+            2. Chats
+            3. Channels
+            4. My profile
+            5. Delete account
+            0. Log Out
             ==========================================================""";
 
     String CHANNEL_OWNER_MENU = """
@@ -97,7 +102,7 @@ public interface MenuUtils {
             6. Show users
             7. Edit group name
             8. Edit description
-            9. kick out user
+            9. Kick out user
             10. Delete group
             0. Exit
             ==========================================================""";
@@ -111,8 +116,8 @@ public interface MenuUtils {
             3. Delete message (can delete any message)
             4. Add user
             5. Show users
-            6. kick out user
-            6. Leave group
+            6. Kick out user
+            7. Leave group
             0. Exit
             ==========================================================""";
 
@@ -130,7 +135,7 @@ public interface MenuUtils {
 
     String CHAT_MENU = """
             ==========================================================
-                                   CHAT MENU
+                                    CHAT MENU
             ==========================================================
             1. Write message
             2. Edit message (only our message)

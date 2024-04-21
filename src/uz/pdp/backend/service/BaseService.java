@@ -7,9 +7,8 @@ import java.util.List;
 public interface BaseService<M extends BaseModel> {
 
     // CRUD  => Create, read, update, delete
-    boolean
-    create(M m);
-    M get(String ID);
+    boolean create(M m);
+    M get(String userID);
     List<M> getList();
     void update(M newM);
     boolean delete(String ID);

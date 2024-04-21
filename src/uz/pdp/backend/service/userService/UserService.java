@@ -5,7 +5,6 @@ import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.service.BaseService;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface UserService extends BaseService<User> {
 

@@ -152,4 +152,9 @@ public class UserServiceImp implements UserService {
         users.add(newUser);
         return true;
     }
+
+    static int getCountOfUser(){
+        UserService userService = UserServiceImp.getInstance();
+        return userService.getList().size();
+    }
 }

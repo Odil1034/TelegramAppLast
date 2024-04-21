@@ -11,7 +11,7 @@ public interface GroupService extends BaseService<Group> {
     Set<String> getUsersInGroup(String groupID);
     Set<String> getAdminsInGroup(String groupID);
     List<String> getMessagesInGroup(String groupID);
-    String getOwnerUserId(String groupID);
+    String getOwnerByGroupId(String groupID);
     String getGroupDescription(String groupID);
 
     boolean addUserInGroup(String groupID, String userID);
