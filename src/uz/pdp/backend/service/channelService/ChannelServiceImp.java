@@ -2,17 +2,14 @@ package uz.pdp.backend.service.channelService;
 
 import uz.pdp.backend.models.channel.Channel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChannelServiceImp implements ChannelService{
 
     private static ChannelService channelService;
     private final List<Channel> channelList;
-    private Map <String, List<String>> messagesInChannels; // k = channelId, v = message list of channel
-    private Map <String, List<String>> subscribedUsers; // k = channelId, v = subscribed users list
+    private final Map <String, List<String>> messagesInChannels; // k = channelId, v = message list of channel
+    private final Map <String, Set<String>> subscribedUsers; // k = channelId, v = subscribed users list
 
     public static ChannelService getInstance() {
         if (channelService == null){
@@ -31,7 +28,7 @@ public class ChannelServiceImp implements ChannelService{
     public boolean create(Channel channel) {
         channelList.add(channel);
         messagesInChannels.put(channel.getID(), new ArrayList<>());
-        subscribedUsers.put(channel.getID(), new ArrayList<>(List.of(channel.getAuthorID())));
+        subscribedUsers.put(channel.getID(), new HashSet<>(List.of(channel.getAuthorID())));
         return true;
     }
 
@@ -88,10 +85,21 @@ public class ChannelServiceImp implements ChannelService{
 
     @Override
     public boolean userSubscriptionToChannel(String channelID, String userID) {
-        List<String> users = subscribedUsers.get(channelID);
+        Set<String> users = subscribedUsers.get(channelID);
         if (users == null){
             throw new NullPointerException();
         }
        return users.add(userID);
+    }
+
+
+    @Override
+    public boolean hasUserSubscribedToChannel(String channelID, String userID) {
+        return subscribedUsers.get(channelID).contains(userID);
+    }
+
+    @Override
+    public boolean unsubscribeChannel(String channelID, String userId) {
+       return subscribedUsers.get(channelID).remove(userId);
     }
 }
