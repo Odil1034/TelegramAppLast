@@ -19,6 +19,7 @@ import uz.pdp.frontend.utills.ScanInput;
 
 import java.util.List;
 
+import static uz.pdp.frontend.view.CommonMenuMethods.getOrCreateChannel;
 import static uz.pdp.frontend.view.CommonMenuMethods.showUsers;
 
 public class AdminView {
@@ -58,7 +59,7 @@ public class AdminView {
         while (true) {
             int menu = MenuUtils.menu(MenuUtils.ADMIN_MENU);
             switch (menu) {
-                case 1 -> showUsers(userService.getList());
+                case 1 -> AdminView.showUsers(userService.getList());
                 case 2 -> searchUser();
                 case 3 -> AdminView.showChannels();
                 case 4 -> showGroups();
@@ -72,6 +73,35 @@ public class AdminView {
                     System.out.println("Wrong choice menu, try again ❌❌❌");
                 }
             }
+        }
+    }
+
+    private static void showUsers(List<User> userList) {
+        if(userList == null){
+            System.out.println("User is not found");
+        }else{
+
+            System.out.printf("""
+                ==========================================================
+                                     USERS LIST  (%d users)
+                ==========================================================
+                """, userList.size());
+            System.out.println("№\t USERNAME \t NAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
+            for (int i = 0; i < userList.size(); i++) {
+                User user = userList.get(i);
+                System.out.println(i + 1 + "." +
+                                   " \t " + user.getUsername() +
+                                   " \t " + user.getName() +
+                                   " \t   " + user.getRole() +
+                                   " \t " + user.getStatus() + " " +
+                                   "\t " + user.getBirthDay() +
+                                   " \t " + userService.getUserAge(user));
+            }
+            System.out.println("=".repeat(50));
+
+            int ind = ScanInput.getInt("Choose user: ") - 1;
+            User user = userList.get(ind);
+            UserControl(user);
         }
     }
 
@@ -215,26 +245,33 @@ public class AdminView {
     private static void showChannels() {
         List<Channel> channelList = channelService.getList();
         if (channelList == null){
-            return;
-        }
-        System.out.printf("""
+            System.out.println("Channel not found ❌❌❌");
+
+            int choose = ScanInput.getInt("Are you want create new Channel? " +
+                                          "\n 1. Yes \n 2. No \n Choose: ");
+            if (choose == 1) getOrCreateChannel(curUser);
+
+        }else {
+            System.out.printf("""
                 ==========================================================\s
                                 ALL EXIST CHANNELS (%d channel)\s
                 ==========================================================""",
-                channelList.size());
+                    channelList.size());
 
-        int countOfSubscribes = 0;
-        List<User> userList = userService.getList();
-        for (int i = 0; i < channelList.size(); i++) {
-            User user = userList.get(i);
-            Channel channel = channelList.get(i);
-            if (channelService.userSubscriptionToChannel(channel.getID(), user.getID())) {
-                countOfSubscribes++;
+            int countOfSubscribes = 0;
+            List<User> userList = userService.getList();
+            for (int i = 0; i < channelList.size(); i++) {
+                User user = userList.get(i);
+                Channel channel = channelList.get(i);
+                if (channelService.userSubscriptionToChannel(channel.getID(), user.getID())) {
+                    countOfSubscribes++;
+                }
+                User author = userService.get(channel.getAuthorID());
+                System.out.println(i + 1 + ". " + channel.getName() + "   " + author.getUsername() +
+                                   "   (" + countOfSubscribes + "  subscribes)");
             }
-            User author = userService.get(channel.getAuthorID());
-            System.out.println(i + 1 + ". " + channel.getName() + "   " + author.getUsername() +
-                               "   (" + countOfSubscribes + "  subscribes)");
         }
+
     }
 
     private static void searchUser() {

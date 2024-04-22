@@ -42,10 +42,11 @@ public interface CommonMenuMethods {
          * 4. Status
          * 0. Back to Menu
          */
-        int choice = MenuUtils.menu(MenuUtils.SEARCH_USER_MENU);
 
         List<User> list;
-        switch (choice) {
+        while (true){
+            int choice = MenuUtils.menu(MenuUtils.SEARCH_USER_MENU);
+            switch (choice) {
             case 1 -> {
                 String name = ScanInput.getStr("Enter name: ");
                 list = userService.getListMatchName(name);
@@ -79,6 +80,7 @@ public interface CommonMenuMethods {
                 return null;
             }
             default -> throw new IllegalStateException("Unexpected value: " + choice);
+        }
         }
     }
 

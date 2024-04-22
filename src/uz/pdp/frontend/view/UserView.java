@@ -4,6 +4,7 @@ import uz.pdp.backend.models.channel.Channel;
 import uz.pdp.backend.models.chat.Chat;
 import uz.pdp.backend.models.group.Group;
 import uz.pdp.backend.models.user.User;
+import uz.pdp.backend.types.user.UserRole;
 import uz.pdp.frontend.utills.MenuUtils;
 import uz.pdp.frontend.utills.ScanInput;
 
@@ -275,6 +276,16 @@ public class UserView {
                     List<User> list = userService.getList();
                     showUsers(list);
                     // change user role
+                    int userInd = ScanInput.getInt("Choose user: ") - 1;
+                    User user = list.get(userInd);
+                    UserRole.showType();
+
+                    System.out.println(("Old UserRole: " + user.getRole()));
+                    int userRoleInd = ScanInput.getInt("Choose new UserRole: ") - 1;
+                    UserRole type = UserRole.getType(userRoleInd);
+                    user.setRole(type);
+                    userService.update(user);
+                    System.out.println("User: " + user.getUsername() + " Role changed to " + type);
 
                 }
                 case 6 -> {
