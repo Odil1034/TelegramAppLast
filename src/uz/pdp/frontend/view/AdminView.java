@@ -19,8 +19,7 @@ import uz.pdp.frontend.utills.ScanInput;
 
 import java.util.List;
 
-import static uz.pdp.frontend.view.CommonMenuMethods.getOrCreateChannel;
-import static uz.pdp.frontend.view.CommonMenuMethods.showUsers;
+import static uz.pdp.frontend.view.CommonMenuMethods.*;
 
 public class AdminView {
 
@@ -113,12 +112,15 @@ public class AdminView {
             List<String> users = groupService.getUsersInGroup(group.getID());
             int countOfSubscribes = users.size();
 
-            String ownerID = groupService.getOwnerByGroupId(group.getID());
+            String ownerID = String.valueOf(groupList.get(i).getOwnerID());
             User owner = userService.get(ownerID);
             System.out.println(i + 1 + ". GroupName: " + group.getName() +
                                " Owner: " + owner.getUsername() +
                                "   " + countOfSubscribes + " subscribes");
         }
+        int groupInd = ScanInput.getInt("Choose group: ");
+        Group group = groupList.get(groupInd);/*
+        showMessages(, group.getID());*/
     }
 
     private static void UserControl(User user) {

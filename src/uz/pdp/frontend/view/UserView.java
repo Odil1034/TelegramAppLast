@@ -255,7 +255,7 @@ public class UserView {
                     // add user
                     User foundUser = findUser();
                     if (foundUser != null) {
-                        System.out.println(foundUser);
+                        System.out.println("Additional user: " + foundUser.getUsername() + "   " + foundUser.getName());
 
                         int n = MenuUtils.menu("""
                                 ==========================================================
