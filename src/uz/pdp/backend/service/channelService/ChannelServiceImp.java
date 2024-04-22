@@ -101,4 +101,9 @@ public class ChannelServiceImp implements ChannelService{
     public boolean unsubscribeChannel(String channelID, String userId) {
        return subscribedUsers.get(channelID).remove(userId);
     }
+
+    @Override
+    public int getCountUsersInChannel(String channelID) {
+       return subscribedUsers.get(channelID).size();
+    }
 }
