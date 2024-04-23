@@ -14,11 +14,10 @@ public interface UserService extends BaseService<User> {
     User login(LoginDTO loginDTO);
     boolean signUp(User user);
     User getUserByUsername(String username);
-    LocalDate makeBirthday(String birthdayStr);
-    int getUserAge(User user);
+    public LocalDate makeBirthday(String birthday);
+    int getUserAge(LocalDate userBirthday);
     boolean isValidUsername(String username);
     List<User> getListMatchName(String name);
     List<User> getListMatchRole(UserRole role);
     List<User> getListMatchStatusType(StatusType statusType);
-    List<User> getList();
 }

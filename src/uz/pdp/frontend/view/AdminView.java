@@ -2,6 +2,7 @@ package uz.pdp.frontend.view;
 
 import uz.pdp.backend.models.channel.Channel;
 import uz.pdp.backend.models.group.Group;
+import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.service.channelService.ChannelService;
 import uz.pdp.backend.service.channelService.ChannelServiceImp;
@@ -88,13 +89,14 @@ public class AdminView {
             System.out.println("№\t USERNAME \t NAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
             for (int i = 0; i < userList.size(); i++) {
                 User user = userList.get(i);
+                int userAge = userService.getUserAge(user.getBirthDay());
                 System.out.println(i + 1 + "." +
                                    " \t " + user.getUsername() +
                                    " \t " + user.getName() +
                                    " \t   " + user.getRole() +
                                    " \t " + user.getStatus() + " " +
                                    "\t " + user.getBirthDay() +
-                                   " \t " + userService.getUserAge(user));
+                                   " \t " + userAge);
             }
             System.out.println("=".repeat(50));
 
@@ -119,8 +121,9 @@ public class AdminView {
                                "   " + countOfSubscribes + " subscribes");
         }
         int groupInd = ScanInput.getInt("Choose group: ");
-        Group group = groupList.get(groupInd);/*
-        showMessages(, group.getID());*/
+        Group group = groupList.get(groupInd);
+        List<Message> groupMessagesList = messageService.getMessagesByChatID(group.getID());
+        showMessages(groupMessagesList, group.getName());
     }
 
     private static void UserControl(User user) {
@@ -207,7 +210,7 @@ public class AdminView {
 
             for (int i = 0; i < channels.size(); i++) {
                 Channel channel = channels.get(i);
-                User authorChannel = userService.get(channel.getAuthorID());
+                User authorChannel = userService.get(channel.getOwnerID());
                 System.out.println(i + 1 + ". " + channel.getName() +
                                    "\t" + authorChannel.getUsername());
             }
@@ -233,12 +236,14 @@ public class AdminView {
                 ==========================================================
                                         USER INFO
                 ==========================================================""");
+        int userAge = userService.getUserAge(user.getBirthDay());
+
         System.out.println("UserName: " + user.getUsername() +
                            "\nPassword: " + user.getPassword() +
                            "\nName: " + user.getName() +
                            "\nLastName: " + user.getLastName() +
                            "\nBirthday: " + user.getBirthDay() +
-                           "\nAge: " + userService.getUserAge(user) +
+                           "\nAge: " + userAge +
                            "\nRole: " + user.getRole() +
                            "\nStatus: " + user.getStatus());
     }
@@ -268,7 +273,7 @@ public class AdminView {
                 if (channelService.userSubscriptionToChannel(channel.getID(), user.getID())) {
                     countOfSubscribes++;
                 }
-                User author = userService.get(channel.getAuthorID());
+                User author = userService.get(channel.getOwnerID());
                 System.out.println(i + 1 + ". " + channel.getName() + "   " + author.getUsername() +
                                    "   (" + countOfSubscribes + "  subscribes)");
             }

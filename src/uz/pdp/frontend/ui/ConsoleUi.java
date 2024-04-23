@@ -14,20 +14,15 @@ public class ConsoleUi {
         System.out.println("==========================================================\n" +
                 "Welcome to Our Telegram Application 😊😊😊");
 
-
-        //noinspection InfiniteLoopStatement
         while (true) {
             int menu = MenuUtils.menu(MenuUtils.MAIN);
             switch (menu) {
                 case 1 -> loginUser();
                 case 2 -> signUp();
-                case 3 -> exitProgram();
+                case 0 -> exitProgram();
+                default -> System.out.println("Wrong choice, try again ❌❌❌");
             }
         }
-
-
-
-
     }
 
     private static void loginUser() {
@@ -51,7 +46,6 @@ public class ConsoleUi {
             System.out.println("Username or password is incorrect ❌");
         }
     }
-
 
     private static void signUp() {
         LoginView.signUp();

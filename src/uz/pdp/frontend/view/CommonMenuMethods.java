@@ -14,8 +14,11 @@ import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
 import uz.pdp.backend.service.messageService.MessageService;
 import uz.pdp.backend.service.messageService.MessageServiceImp;
+import uz.pdp.backend.service.userGroupService.UserGroupService;
+import uz.pdp.backend.service.userGroupService.UserGroupServiceImp;
 import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
+import uz.pdp.backend.types.group.groupRole.GroupRole;
 import uz.pdp.backend.types.user.StatusType;
 import uz.pdp.backend.types.user.UserRole;
 import uz.pdp.frontend.utills.MenuUtils;
@@ -30,6 +33,7 @@ public interface CommonMenuMethods {
     UserService userService = UserServiceImp.getInstance();
     ChatService chatService = ChatServiceImp.getInstance();
     ChannelService channelService = ChannelServiceImp.getInstance();
+    UserGroupService userGroupService = UserGroupServiceImp.getInstance();
     GroupService groupService = GroupServiceImp.getInstance();
     MessageService messageService = MessageServiceImp.getInstance();
 
@@ -44,43 +48,43 @@ public interface CommonMenuMethods {
          */
 
         List<User> list;
-        while (true){
+        while (true) {
             int choice = MenuUtils.menu(MenuUtils.SEARCH_USER_MENU);
             switch (choice) {
-            case 1 -> {
-                String name = ScanInput.getStr("Enter name: ");
-                list = userService.getListMatchName(name);
-                return checkList(list);
-            }
-            case 2 -> {
-                String username = ScanInput.getStr("Enter username: ");
-                User user = userService.getUserByUsername(username);
-                if (user != null) {
-                    return user;
-                } else {
-                    System.out.println("User is not found");
+                case 1 -> {
+                    String name = ScanInput.getStr("Enter name: ");
+                    list = userService.getListMatchName(name);
+                    return checkList(list);
+                }
+                case 2 -> {
+                    String username = ScanInput.getStr("Enter username: ");
+                    User user = userService.getUserByUsername(username);
+                    if (user != null) {
+                        return user;
+                    } else {
+                        System.out.println("User is not found");
+                        return null;
+                    }
+                }
+                case 3 -> {
+                    UserRole.showType();
+                    int index = ScanInput.getInt("Choose: ") - 1;
+                    UserRole userRole = UserRole.getType(index);
+                    list = userService.getListMatchRole(userRole);
+                    return checkList(list);
+                }
+                case 4 -> {
+                    StatusType.showType();
+                    int index = ScanInput.getInt("Choose: ") - 1;
+                    StatusType statusType = StatusType.getType(index);
+                    list = userService.getListMatchStatusType(statusType);
+                    return checkList(list);
+                }
+                case 0 -> {
                     return null;
                 }
+                default -> throw new IllegalStateException("Unexpected value: " + choice);
             }
-            case 3 -> {
-                UserRole.showType();
-                int index = ScanInput.getInt("Choose: ") - 1;
-                UserRole userRole = UserRole.getType(index);
-                list = userService.getListMatchRole(userRole);
-                return checkList(list);
-            }
-            case 4 -> {
-                StatusType.showType();
-                int index = ScanInput.getInt("Choose: ") - 1;
-                StatusType statusType = StatusType.getType(index);
-                list = userService.getListMatchStatusType(statusType);
-                return checkList(list);
-            }
-            case 0 -> {
-                return null;
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + choice);
-        }
         }
     }
 
@@ -117,33 +121,34 @@ public interface CommonMenuMethods {
 
     static void showUsers(List<User> usersList) {
 
-        if(usersList == null){
+        if (usersList == null) {
             System.out.println("User is not found");
-        }else{
+        } else {
 
             System.out.printf("""
-                ==========================================================
-                                     USERS LIST  (%d users)
-                ==========================================================
-                """, usersList.size());
+                    ==========================================================
+                                         USERS LIST  (%d users)
+                    ==========================================================
+                    """, usersList.size());
             System.out.println("№\t USERNAME \t NAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
             for (int i = 0; i < usersList.size(); i++) {
                 User user = usersList.get(i);
+                int userAge = userService.getUserAge(user.getBirthDay());
                 System.out.println(i + 1 + "." +
                                    " \t " + user.getUsername() +
                                    " \t " + user.getName() +
                                    " \t   " + user.getRole() +
                                    " \t " + user.getStatus() + " " +
-                                   "\t " + user.getBirthDay() +
-                                   " \t " + userService.getUserAge(user));
+                                   " \t " + user.getBirthDay() +
+                                   " \t " + userAge);
             }
             System.out.println("=".repeat(50));
         }
 
     }
 
-    static void addUser(Group group, User user) {
-        boolean b = groupService.addUserInGroup(group.getID(), user.getID());
+    static void addUser(Group group, User user, GroupRole groupRole) {
+        boolean b = userGroupService.addUserToGroup(group.getID(), user.getID(), groupRole);
         if (b) {
             System.out.println("user added successfully to channel");
         } else System.out.println("user not added");
@@ -276,6 +281,10 @@ public interface CommonMenuMethods {
         Group group = new Group(groupName, curUser.getID(), description);
 
         boolean groupIsCreated = groupService.create(group);
+
+        User user = findUser();
+        assert user != null;
+        addUser(group, user);
 
         if (groupIsCreated) {
             System.out.println("group created successfully");
@@ -422,7 +431,7 @@ public interface CommonMenuMethods {
         String lastName = user.getLastName();
         LocalDate birthDay = user.getBirthDay();
         String username = user.getUsername();
-       // String password = user.getPassword();
+        // String password = user.getPassword();
         UserRole role = user.getRole();
         StatusType status = user.getStatus();
 
@@ -479,7 +488,6 @@ public interface CommonMenuMethods {
             }
         }
     }
-
 
 
 }

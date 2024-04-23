@@ -82,12 +82,11 @@ public class UserServiceImp implements UserService {
         return LocalDate.parse(birthdayStr, formatter);
     }
 
-    public int getUserAge(User user) {
+    public int getUserAge(LocalDate birthday) {
         int age;
 
-        LocalDate birthDay = user.getBirthDay();
         LocalDate now = LocalDate.now();
-        Period period = Period.between(birthDay, now);
+        Period period = Period.between(birthday, now);
         age = period.getYears();
 
         return age;
@@ -117,7 +116,9 @@ public class UserServiceImp implements UserService {
     public boolean delete(String userID) {
         for (User user : users) {
             if (user.getID().equals(userID)) {
-                user.setIsDelete(true);
+                user.setDelete(true);
+                user.setStatus(StatusType.DELETED);
+                return true;
             }
         }
         return false;

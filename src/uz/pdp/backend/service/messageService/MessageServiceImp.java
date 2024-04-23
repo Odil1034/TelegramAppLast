@@ -1,11 +1,16 @@
 package uz.pdp.backend.service.messageService;
 
+import uz.pdp.backend.models.group.Group;
 import uz.pdp.backend.models.message.Message;
+import uz.pdp.backend.service.groupService.GroupService;
+import uz.pdp.backend.service.groupService.GroupServiceImp;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageServiceImp implements MessageService{
+
+    GroupService groupService = GroupServiceImp.getInstance();
     private static MessageService service;
     private final List<Message> messages;
 
@@ -63,14 +68,22 @@ public class MessageServiceImp implements MessageService{
     }
 
     @Override
-    public List<Message> getMessagesByChatID(String chatID) {
+    public List<Message> getMessagesInGroup(String groupOrChatID) {
         List<Message> messagesInChat = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getChatID().equals(chatID)){
+            if (message.getChatOrGroupID().equals(groupOrChatID)){
                 messagesInChat.add(message);
             }
         }
         return messagesInChat;
+    }
+
+    @Override
+    public boolean addMessageInGroup(String messageID, String groupID) {
+        for (Message message : messages) {
+            Group group = groupService.get(groupID);
+        }
+        return false;
     }
 
 }

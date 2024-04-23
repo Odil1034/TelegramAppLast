@@ -5,22 +5,22 @@ import java.util.UUID;
 public abstract class BaseModel {
 
     private String ID;
-    private boolean isDelete;
+    private boolean delete;
 
     public BaseModel() {
         this.ID = UUID.randomUUID().toString();
-        this.isDelete = false;
+        this.delete = false;
     }
 
     public String getID() {
         return ID;
     }
 
-    public boolean isDelete() {
-        return isDelete;
+    public boolean getDelete() {
+        return delete;
     }
 
-    public void setIsDelete(boolean delete) {
-        isDelete = delete;
+    public void setDelete(boolean delete) {
+        this.delete = delete;
     }
 }

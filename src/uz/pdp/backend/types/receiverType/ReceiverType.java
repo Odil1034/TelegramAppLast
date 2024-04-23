@@ -1,25 +1,24 @@
-package uz.pdp.backend.types.user.channelUserTypes;
+package uz.pdp.backend.types.receiverType;
 
-import uz.pdp.backend.types.user.UserRole;
+public enum ReceiverType {
 
-public enum ChannelUserType {
-
-    OWNER,
-    USER;
+    GROUP,
+    CHAT,
+    CHANNEL;
 
     public static void showType() {
         System.out.println("""
                 ==========================================================
-                                  USER TYPES OF CHANNEL
+                                      RECEIVER TYPES
                 ==========================================================""");
-        ChannelUserType[] values = values();
-        for (ChannelUserType value : values) {
+        ReceiverType[] values = values();
+        for (ReceiverType value : values) {
             System.out.println(value.ordinal() + 1 + ".  " + value);
         }
     }
 
-    public static ChannelUserType getType(int index){
-        ChannelUserType[] values = values();
+    public static ReceiverType getType(int index){
+        ReceiverType[] values = values();
         if(index < 0 || index > values.length){
             return null;
         }

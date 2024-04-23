@@ -6,6 +6,8 @@ import uz.pdp.backend.service.BaseService;
 import java.util.List;
 
 public interface MessageService extends BaseService<Message>{
-    List<Message> getMessagesByChatID(String chatID);
+
+    List<Message> getMessagesInGroup(String groupOrChatID);
+    boolean addMessageInGroup(String messageID, String groupID);
 
 }

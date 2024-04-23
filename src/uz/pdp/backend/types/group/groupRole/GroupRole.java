@@ -1,31 +1,28 @@
-package uz.pdp.backend.types.user.groupUserTypes;
+package uz.pdp.backend.types.group.groupRole;
 
-import uz.pdp.backend.types.user.UserRole;
+public enum GroupRole {
 
-public enum GroupUserTypes {
-
-    OWNER,
+    ADMIN,
     USER,
-    ADMIN;
+    OWNER;
 
     public static void showType() {
         System.out.println("""
                 ==========================================================
-                                   USER TYPES OF GROUP
+                                       GROUP ROLE
                 ==========================================================""");
-        GroupUserTypes[] values = values();
-        for (GroupUserTypes value : values) {
+        GroupRole[] values = values();
+        for (GroupRole value : values) {
             System.out.println(value.ordinal() + 1 + ".  " + value);
         }
     }
 
-    public static GroupUserTypes getType(int index){
-        GroupUserTypes[] values = values();
+    public static GroupRole getType(int index){
+        GroupRole[] values = values();
         if(index < 0 || index > values.length){
             return null;
         }
 
         return values[index];
     }
-
 }

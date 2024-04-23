@@ -98,7 +98,7 @@ public class UserView {
     private static void channelOwnerMenu(Channel channel) {
 
         while (true) {
-            showMessages(messageService.getMessagesByChatID(channel.getID()), channel.getName());
+//            showMessages(messageService.getMessagesByChatID(channel.getID()), channel.getName());
 
             int menu = MenuUtils.menu(MenuUtils.CHANNEL_OWNER_MENU);
             switch (menu) {
@@ -357,12 +357,13 @@ public class UserView {
         for (int i = 0; i < userList.size(); i++) {
 
             User user = userList.get(i);
+            int userAge = userService.getUserAge(user.getBirthDay());
             System.out.println(i + 1 + "." +
                                " \t " + user.getUsername() +
                                " \t   " + user.getRole() +
                                " \t " + user.getStatus() + " " +
                                "\t " + user.getBirthDay() +
-                               " \t " + userService.getUserAge(user));
+                               " \t " + userAge);
         }
         System.out.println("=".repeat(50));
     }

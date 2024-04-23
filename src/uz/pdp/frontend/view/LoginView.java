@@ -30,7 +30,12 @@ public class LoginView {
         String birthdayStr = ScanInput.getStr("Enter your birthday as dd/mm/yyyy : ");
         LocalDate birthday = userService.makeBirthday(birthdayStr);
 
-        String username = ScanInput.getStr("Username: ");
+        String username;
+        do {
+            username = ScanInput.getStr("Username: ");
+
+        } while (userService.isValidUsername(username));
+
         String password = ScanInput.getStr("Password: ");
 
         boolean isUserCreated = userService.signUp(new User(name, lastName, birthday,
