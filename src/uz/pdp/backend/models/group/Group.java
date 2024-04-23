@@ -17,6 +17,7 @@ public class Group extends BaseModel {
         this.name = name;
         this.ownerID = authorID;
         this.description = description;
+        status = GroupStatus.ACTIVE;
     }
 
     public String getName() {
@@ -41,5 +42,13 @@ public class Group extends BaseModel {
 
     public void setDescription(String massageID) {
         this.description = description;
+    }
+
+    public GroupStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GroupStatus status) {
+        this.status = status;
     }
 }

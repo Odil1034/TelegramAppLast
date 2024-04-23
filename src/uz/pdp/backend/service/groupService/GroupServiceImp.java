@@ -6,7 +6,7 @@ import java.util.*;
 
 public class GroupServiceImp implements GroupService {
 
-    private List<Group> groups;
+    List<Group> groups;
 
     private GroupServiceImp() {
         groups = new ArrayList<>();
@@ -68,58 +68,8 @@ public class GroupServiceImp implements GroupService {
         return false;
     }
 
-//
-//    @Override
-//    public List<String> getUsersInGroup(String groupID) {
-//        return new ArrayList<>(usersInGroup.get(groupID));
-//    }
-//
-//    @Override
-//    public List<String> getAdminsInGroup(String groupID) {
-//        return new ArrayList<>(adminsInGroup.get(groupID));
-//    }
-//
-//    @Override
-//    public List<String> getMessagesInGroup(String groupID) {
-//        return messagesInGroup.get(groupID);
-//    }
-//
-//    @Override
-//    public boolean addUserInGroup(String groupID, String userID) {
-//        usersInGroup.get(groupID).add(userID);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean addAdminInGroup(String userID, String groupID) {
-//        adminsInGroup.get(groupID).add(userID);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean addMessageInGroup(String MessageID, String groupID) {
-//        messagesInGroup.get(groupID).add(MessageID);
-//        return true;
-//    }
-//
-//    @Override
-//    public List<Group> getGroups(String userID) {
-//
-//        List<Group> groups = new ArrayList<>();
-//
-//        for (Group group : groups) {
-//            String groupID = group.getID();
-//            if (usersInGroup.get(groupID).contains(userID) ||
-//                    adminsInGroup.get(groupID).contains(userID)) {
-//                groups.add(group);
-//            }
-//        }
-//        return groups;
-//    }
-//
-//    @Override
-//    public int getCountOfUsersInGroup(String groupID) {
-//        return usersInGroup.get(groupID).size();
-//    }
-
+    @Override
+    public int countOfGroups() {
+        return groups.size();
+    }
 }

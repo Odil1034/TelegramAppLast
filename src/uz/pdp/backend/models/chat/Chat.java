@@ -6,12 +6,10 @@ public class Chat extends BaseModel {
     private String firstUserID;
     private String secondUserID;
 
-
     public Chat(String firstUserID, String secondUserID) {
         this.firstUserID = firstUserID;
         this.secondUserID = secondUserID;
     }
-
 
     public String getFirstUserID() {
         return firstUserID;

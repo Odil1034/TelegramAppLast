@@ -1,15 +1,15 @@
-package uz.pdp.backend.models.userGroup;
+package uz.pdp.backend.models.groupFollower;
 
 import uz.pdp.backend.models.BaseModel;
 import uz.pdp.backend.types.group.groupRole.GroupRole;
 
-public class UserGroup extends BaseModel {
+public class GroupFollower extends BaseModel {
 
     private String userID;
     private String groupID;
     private GroupRole role;
 
-    public UserGroup(String userID, String groupID, GroupRole role) {
+    public GroupFollower(String userID, String groupID, GroupRole role) {
         this.userID = userID;
         this.groupID = groupID;
         this.role = role;

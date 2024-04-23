@@ -4,6 +4,7 @@ import uz.pdp.backend.models.group.Group;
 import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
+import uz.pdp.backend.types.receiverType.ReceiverType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,10 +81,14 @@ public class MessageServiceImp implements MessageService{
 
     @Override
     public boolean addMessageInGroup(String messageID, String groupID) {
+
         for (Message message : messages) {
-            Group group = groupService.get(groupID);
+            if (message.getID().equals(messageID)) {
+                message.setReceiverType(ReceiverType.GROUP);
+                message.setChatOrGroupID(groupID);
+                return true;
+            }
         }
         return false;
     }
-
 }

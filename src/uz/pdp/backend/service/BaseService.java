@@ -8,7 +8,7 @@ public interface BaseService<M extends BaseModel> {
 
     // CRUD  => Create, read, update, delete
     boolean create(M m);
-    M get(String userID);
+    M get(String ID);
     List<M> getList();
     void update(M newM);
     boolean delete(String ID);

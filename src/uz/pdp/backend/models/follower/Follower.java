@@ -1,14 +1,15 @@
-package uz.pdp.backend.models.channelUser;
+package uz.pdp.backend.models.follower;
 
+import uz.pdp.backend.models.BaseModel;
 import uz.pdp.backend.types.channel.ChannelRole;
 
-public class ChannelUser {
+public class Follower extends BaseModel {
 
     private String channelID;
     private String userID;
     private ChannelRole role;
 
-    public ChannelUser(String channelID, String userID, ChannelRole role) {
+    public Follower(String channelID, String userID, ChannelRole role) {
         this.channelID = channelID;
         this.userID = userID;
         this.role = role;

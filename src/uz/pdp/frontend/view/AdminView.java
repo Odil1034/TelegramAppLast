@@ -4,6 +4,8 @@ import uz.pdp.backend.models.channel.Channel;
 import uz.pdp.backend.models.group.Group;
 import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.models.user.User;
+import uz.pdp.backend.service.FollowerService.FollowerService;
+import uz.pdp.backend.service.FollowerService.FollowerServiceImp;
 import uz.pdp.backend.service.channelService.ChannelService;
 import uz.pdp.backend.service.channelService.ChannelServiceImp;
 import uz.pdp.backend.service.chatService.ChatService;
@@ -12,6 +14,8 @@ import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
 import uz.pdp.backend.service.messageService.MessageService;
 import uz.pdp.backend.service.messageService.MessageServiceImp;
+import uz.pdp.backend.service.groupFollowerService.GroupFollowerService;
+import uz.pdp.backend.service.groupFollowerService.GroupFollowerServiceImp;
 import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
 import uz.pdp.backend.types.user.StatusType;
@@ -29,6 +33,8 @@ public class AdminView {
     private static final ChannelService channelService = ChannelServiceImp.getInstance();
     private static final GroupService groupService = GroupServiceImp.getInstance();
     private static final MessageService messageService = MessageServiceImp.getInstance();
+    private static final GroupFollowerService groupFollowerService = GroupFollowerServiceImp.getInstance();
+    private static final FollowerService followerService = FollowerServiceImp.getInstance();
     private static User curUser;
 
     /*
@@ -49,7 +55,7 @@ public class AdminView {
     public static void profile(User admin) {
         curUser = admin;
 
-        /**
+        /** Admin menu
          1. Show users
          2. Search user
          3. Show channels
@@ -64,14 +70,13 @@ public class AdminView {
                 case 3 -> AdminView.showChannels();
                 case 4 -> showGroups();
                 case 0 -> {
-                    int change = ScanInput.getInt("Are you  want to exit of your profile? \n 1. Yes \n 2. No");
+                    int change = ScanInput.getInt("Are you  want to exit of your profile? " +
+                                                  "\n 1.. Yes \n 2. No");
                     if (change == 1) {
                         return;
                     }
                 }
-                default -> {
-                    System.out.println("Wrong choice menu, try again ❌❌❌");
-                }
+                default -> System.out.println("Wrong choice menu, try again ❌❌❌");
             }
         }
     }
@@ -86,11 +91,12 @@ public class AdminView {
                                      USERS LIST  (%d users)
                 ==========================================================
                 """, userList.size());
-            System.out.println("№\t USERNAME \t NAME \t ROLE \t STATUS \t BIRTHDAY \t      AGE\n");
+            System.out.printf("%S1$20 %S2$20 %S3$10 %S4$10 %S5$10 %S6$10 %n",
+                    "username", "name", "role", "status", "birthday", "age");
             for (int i = 0; i < userList.size(); i++) {
                 User user = userList.get(i);
                 int userAge = userService.getUserAge(user.getBirthDay());
-                System.out.println(i + 1 + "." +
+                System.out.printf("%d. %s1$20 %s2$10 %s3$10 %s4$10 %s5$10 %n", i + 1 + "." +
                                    " \t " + user.getUsername() +
                                    " \t " + user.getName() +
                                    " \t   " + user.getRole() +

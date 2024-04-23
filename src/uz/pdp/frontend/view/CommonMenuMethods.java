@@ -6,16 +6,17 @@ import uz.pdp.backend.models.chat.Chat;
 import uz.pdp.backend.models.group.Group;
 import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.models.user.User;
+import uz.pdp.backend.service.FollowerService.FollowerService;
+import uz.pdp.backend.service.FollowerService.FollowerServiceImp;
 import uz.pdp.backend.service.channelService.ChannelService;
 import uz.pdp.backend.service.channelService.ChannelServiceImp;
 import uz.pdp.backend.service.chatService.ChatService;
 import uz.pdp.backend.service.chatService.ChatServiceImp;
-import uz.pdp.backend.service.groupService.GroupService;
-import uz.pdp.backend.service.groupService.GroupServiceImp;
 import uz.pdp.backend.service.messageService.MessageService;
 import uz.pdp.backend.service.messageService.MessageServiceImp;
-import uz.pdp.backend.service.userGroupService.UserGroupService;
-import uz.pdp.backend.service.userGroupService.UserGroupServiceImp;
+import uz.pdp.backend.service.groupFollowerService.GroupFollowerService;
+import uz.pdp.backend.service.groupFollowerService.GroupFollowerServiceImp;
+import uz.pdp.backend.service.groupFollowerService.UserGroupServiceImp;
 import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
 import uz.pdp.backend.types.group.groupRole.GroupRole;
@@ -33,9 +34,9 @@ public interface CommonMenuMethods {
     UserService userService = UserServiceImp.getInstance();
     ChatService chatService = ChatServiceImp.getInstance();
     ChannelService channelService = ChannelServiceImp.getInstance();
-    UserGroupService userGroupService = UserGroupServiceImp.getInstance();
-    GroupService groupService = GroupServiceImp.getInstance();
     MessageService messageService = MessageServiceImp.getInstance();
+    FollowerService followerService = FollowerServiceImp.getInstance();
+    GroupFollowerService groupFollowerService = GroupFollowerServiceImp.getInstance();
 
     static User findUser() {
 //        showUsers(userService.getList());

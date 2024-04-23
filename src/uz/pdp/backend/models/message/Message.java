@@ -13,10 +13,12 @@ public class Message extends BaseModel {
     private ReceiverType receiverType;
     private LocalDateTime dateTime;
 
-    public Message(String authorID, String content, String chatOrGroupID, LocalDateTime dateTime) {
+    public Message(String authorID, String content, String chatOrGroupID,
+                   ReceiverType receiverType, LocalDateTime dateTime) {
         this.authorID = authorID;
         this.content = content;
         this.chatOrGroupID = chatOrGroupID;
+        this.receiverType = receiverType;
         this.dateTime = dateTime;
     }
 
@@ -42,6 +44,14 @@ public class Message extends BaseModel {
 
     public void setChatOrGroupID(String chatOrGroupID) {
         this.chatOrGroupID = chatOrGroupID;
+    }
+
+    public ReceiverType getReceiverType() {
+        return receiverType;
+    }
+
+    public void setReceiverType(ReceiverType receiverType) {
+        this.receiverType = receiverType;
     }
 
     public LocalDateTime getDateTime() {
