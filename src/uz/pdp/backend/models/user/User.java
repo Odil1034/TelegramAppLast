@@ -7,9 +7,11 @@ import uz.pdp.backend.types.user.UserRole;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.Objects;
 
-public class User extends BaseModel {
+public class User extends BaseModel implements Formattable{
 
     private String name;
     private String lastName;
@@ -97,5 +99,11 @@ public class User extends BaseModel {
     @Override
     public int hashCode() {
         return Objects.hash(getUsername(), super.getID());
+    }
+
+
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+
     }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 public interface ChatService extends BaseService<Chat> {
 
     List<Chat> getUserChats(String userID);
-
+    Chat determineChat(String chatID, String user1ID);
 }

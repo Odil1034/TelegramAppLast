@@ -1,20 +1,17 @@
 package uz.pdp.frontend.utills;
 
-import uz.pdp.backend.service.userService.UserServiceImp;
-
-;
+import uz.pdp.frontend.view.AdminView;
 
 public interface MenuUtils {
 
-    // main Menu
-    String MAIN = """
-            ==========================================================
-                                   MAIN MENU
-            ==========================================================
+    int COUNT_OF_REPEAT = 60;
+    String REPEAT_SIGN = "=";
+
+
+    String MAIN = menuCreate("main menu") + """
             1. Log In
             2. Sign Up
-            0. Exit
-            ==========================================================""";
+              0. Exit""" + last();
 
     /*
      * sistemaga admin kirgandigi menyu
@@ -31,87 +28,82 @@ public interface MenuUtils {
      *  i telegramda nimadur qisa shulani yozish kere
      * */
 
-    String ADMIN_MENU = """
-            ==========================================================
-                                   ADMIN MENU
-            ==========================================================
+    String ADMIN_MENU = menuCreate("admin menu") + """
             1. Show users
             2. Search user
-            3. Show channels
-            4. Show groups
-            5. Show blocked users
-            6. Show deleted users
-            0. Log out
-            ==========================================================""";
-    String USER_CONTROL_MENU = """
-            ==========================================================
-                               USER CONTROL MENU
-            ==========================================================
-            1. Show user info
-            2. Show user channels
-            3. Show user groups
+            3. My Channels
+            4. My Groups
+            5. My Chats
+            6. Show channels
+            7. Show groups
+            8. User control
+            9. Group control
+            10 Channel control
+            11. Edit Profile
+              0. Log out""" + last();
+    String USER_CONTROL_MENU = menuCreate("user control menu") + """
+            1. User information
+            2. Show user's channels
+            3. View user's groups
             4. Block user
             5. Unblock user
-            0. back to menu
-            ==========================================================""";
+            6. Call the user
+              0. back to menu""" + last();
+    String GROUP_CONTROL_MENU = menuCreate("group control menu") + """
+            1. show group users
+            2. Block or unblock group
+            3. show group messages
+              0. back to menu""" + last();
 
-    String USER_MENU = """
-            ==========================================================
-                                     USER MENU
-            ==========================================================
-            1. Groups
-            2. Chats
-            3. Channels
-            4. My profile
-            5. Delete account
-            0. Log Out
-            ==========================================================""";
+    String CHANNEL_CONTROL_MENU = menuCreate("channel control menu") + """
+            1. show channel users
+            2. Block or unblock channel
+            3. show channel messages
+              0. back to menu""" + last();
 
-    String CHANNEL_OWNER_MENU = """
-            ==========================================================
-                                   CHANNEL OWNER MENU
-            ==========================================================
+    String USER_MENU = menuCreate("user menu") + """
+            1. My Groups
+            2. My Chats
+            3. My subscribe channels
+            4. My channels
+            5. Groups
+            5. Channels
+            6. Edit Profile
+            7. Delete account
+              0. Log Out""" + last();
+
+    String CHANNEL_OWNER_MENU = menuCreate("channel owner's menu") + """
             1. Write message
             2. Edit message
             3. Delete message
             4. Add user to channel
             5. Edit Description
             6. Delete Channel
-            0. Exit
-            ==========================================================""";
+            7. Edit Profile
+            8. Delete Channel
+              0. Exit""" + last();
 
 
-    String CHANNEL_USERS_MENU = """
-            ==========================================================
-                                   CHANNEL USER MENU
-            ==========================================================
+    String USER_CHANNEL_MENU = menuCreate("channel user's menu") + """
             1. Show description
-            2. Leave channel
-            0. Exit
-            ==========================================================""";
+            2. Leave the channel
+              0. Exit""" + last();
 
 
-    String GROUP_OWNER_MENU = """
-            ==========================================================
-                                   GROUP OWNER MENU
-            ==========================================================
+    String GROUP_OWNER_MENU = menuCreate("group owner's menu") + """
             1. Write message
             2. Edit message (only our message)
             3. Delete message (can delete any message)
-            4. Add user
+            4. Add user to group
             5. Change user role
             6. Show users
             7. Edit group name
             8. Edit description
             9. Kick out user
             10. Delete group
-            0. Exit
-            ==========================================================""";
+              0. Exit""" + last();
 
-    String GROUP_ADMIN_MENU = """
-            ==========================================================
-                                  GROUP ADMIN MENU
-            ==========================================================
+    String GROUP_ADMIN_MENU = menuCreate("group admin's menu") + """
             1. Write message
             2. Edit messages (only our message)
             3. Delete message (can delete any message)
@@ -119,56 +111,75 @@ public interface MenuUtils {
             5. Show users
             6. Kick out user
             7. Leave group
-            0. Exit
-            ==========================================================""";
+              0. Exit""" + last();
 
-    String GROUP_USER_MENU = """
-            ==========================================================
-                                 GROUP USER MENU
-            ==========================================================
+    String GROUP_USER_MENU = menuCreate("group user's menu") + """
             1. Write message
             2. Edit message (only our message)
             3. Delete message (can delete our message)
             4. Show users
             5. Leave group
-            0. Exit
-            ==========================================================""";
+              0. Exit""" + last();
 
-    String CHAT_MENU = """
-            ==========================================================
-                                    CHAT MENU
-            ==========================================================
+    String CHAT_MENU = menuCreate("chat menu") + """
             1. Write message
             2. Edit message (only our message)
             3. Delete message (can delete our message)
             4. Delete chat
-            0. Exit
-            ==========================================================""";
+              0. Exit""" + last();
 
 
-    String SEARCH_USER_MENU = """
-            ==========================================================
-                               SEARCH USER BY FIELDS
-            ==========================================================
+    String SEARCH_USER_MENU = menuCreate("search user menu") + """
             1. Name
             2. Username
             3. Role
             4. Status
-            0. Back to Menu
-            ==========================================================""";
+              0. Back to Menu""" + last();
 
 
-    String USER_PROFILE_SETTINGS = """
-            ==========================================================
-            1.Change first name
-            2.Change last name
-            3.Change birth date
-            4.Change username
-            0.Exit
-            ==========================================================""";
+    String USER_PROFILE_SETTINGS = menuCreate("user profile settings") + """
+            1. Change first name
+            2. Change last name
+            3. Change birth date
+            4. Change username
+              0.Exit""" + last();
+
+    String FIND_USER_MENU = menuCreate("find user menu") + """
+            1. Name
+            2. Username
+              0.Exit""" + last();
 
     static int menu(String menu) {
         System.out.println(menu);
         return ScanInput.getInt("Choice: ");
     }
+
+    static String menuCreate(String menuName){
+        menuName = menuName.toUpperCase();
+        String repeat = REPEAT_SIGN.repeat(COUNT_OF_REPEAT);
+        int width = (COUNT_OF_REPEAT - menuName.length()) / 2;
+        return repeat + "\n" + " ".repeat(width) + menuName + "\n" + repeat + "\n";
+    }
+
+    static String last(){
+        return "\n" + REPEAT_SIGN.repeat(COUNT_OF_REPEAT);
+    }
+/*
+    static void main(String[] args) {
+        System.out.println(menuCreate("user menu"));
+        System.out.println(menuCreate("user control menu"));
+
+        System.out.println(ADMIN_MENU);
+        System.out.println(MAIN);
+        System.out.println(FIND_USER_MENU);
+        System.out.println(USER_PROFILE_SETTINGS);
+        System.out.println(SEARCH_USER_MENU);
+        System.out.println(GROUP_USER_MENU);
+        System.out.println(CHAT_MENU);
+        System.out.println(USER_CONTROL_MENU);
+        System.out.println(GROUP_ADMIN_MENU);
+        System.out.println(CHANNEL_OWNER_MENU);
+        System.out.println(USER_CHANNEL_MENU);
+        System.out.println(GROUP_OWNER_MENU);
+    }*/
 }

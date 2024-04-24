@@ -1,6 +1,8 @@
 package uz.pdp.backend.service.chatService;
 
 import uz.pdp.backend.models.chat.Chat;
+import uz.pdp.backend.service.userService.UserService;
+import uz.pdp.backend.service.userService.UserServiceImp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,12 @@ public class ChatServiceImp implements ChatService {
             }
         }
         return userChats;
+    }
+
+    @Override
+    public Chat determineChat(String chatID, String user1ID) {
+
+        return null;
     }
 
 }

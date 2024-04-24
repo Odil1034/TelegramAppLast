@@ -7,7 +7,7 @@ import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
 import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
-import uz.pdp.backend.types.group.groupRole.GroupRole;
+import uz.pdp.backend.types.group.GroupRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +109,7 @@ public class GroupFollowerServiceImp implements GroupFollowerService {
     }
 
     @Override
-    public List<Group> getGroupUsers(String userID) {
+    public List<Group> getUserGroups(String userID) {
 
         List<Group> userGroups = new ArrayList<>();
         for (GroupFollower groupFollower : groupFollowerList) {
@@ -125,6 +125,16 @@ public class GroupFollowerServiceImp implements GroupFollowerService {
     @Override
     public boolean addUserToGroup(String groupID, String userID, GroupRole role) {
         Group group = groupService.get(groupID);
+        return false;
+    }
+
+    @Override
+    public boolean checkUserMemberToGroup(String groupID, String userID) {
+        for (User user : getUsersInGroup(groupID)) {
+            if(user.getID().equals(userID)){
+                return true;
+            }
+        }
         return false;
     }
 

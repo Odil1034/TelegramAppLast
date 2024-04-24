@@ -79,6 +79,11 @@ public class FollowerServiceImp implements FollowerService {
     }
 
     @Override
+    public boolean leaveTheChannel(String userID) {
+        return false;
+    }
+
+    @Override
     public List<User> getFollowers(String channelID) {
         List<User> followers = new ArrayList<>();
         for (Follower follower : followerList) {
@@ -113,6 +118,18 @@ public class FollowerServiceImp implements FollowerService {
         }
 
         return userChannels;
+    }
+
+    @Override
+    public List<Channel> getUnsubscribeChannels(String userID) {
+        List<Channel> subscribeChannels = new ArrayList<>();
+        for (Follower follower : followerList) {
+            if (follower.getUserID().equals(userID)) {
+                Channel channel = channelService.get(follower.getChannelID());
+                subscribeChannels.add(channel);
+            }
+        }
+        return subscribeChannels;
     }
 
     @Override

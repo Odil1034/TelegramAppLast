@@ -1,8 +1,6 @@
 package uz.pdp.frontend.view;
 
-import uz.pdp.backend.models.channel.Channel;
 import uz.pdp.backend.models.group.Group;
-import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.models.user.User;
 import uz.pdp.backend.service.FollowerService.FollowerService;
 import uz.pdp.backend.service.FollowerService.FollowerServiceImp;
@@ -19,12 +17,13 @@ import uz.pdp.backend.service.groupFollowerService.GroupFollowerServiceImp;
 import uz.pdp.backend.service.userService.UserService;
 import uz.pdp.backend.service.userService.UserServiceImp;
 import uz.pdp.backend.types.user.StatusType;
-import uz.pdp.frontend.utills.MenuUtils;
-import uz.pdp.frontend.utills.ScanInput;
+import uz.pdp.backend.types.user.UserRole;
+
+import static uz.pdp.frontend.utills.MenuUtils.*;
+import static uz.pdp.frontend.utills.MessageUtils.*;
+import static uz.pdp.frontend.utills.ScanInput.*;
 
 import java.util.List;
-
-import static uz.pdp.frontend.view.CommonMenuMethods.*;
 
 public class AdminView {
 
@@ -35,7 +34,7 @@ public class AdminView {
     private static final MessageService messageService = MessageServiceImp.getInstance();
     private static final GroupFollowerService groupFollowerService = GroupFollowerServiceImp.getInstance();
     private static final FollowerService followerService = FollowerServiceImp.getInstance();
-    private static User curUser;
+    private static User admin;
 
     /*
      * sistemaga admin kirgandigi menyu
@@ -52,294 +51,170 @@ public class AdminView {
      *  i telegramda nimadur qisa shulani yozish kere
      * */
 
-    public static void profile(User admin) {
-        curUser = admin;
+    public static void profile(User curUser) {
+        admin = curUser;
 
-        /** Admin menu
-         1. Show users
-         2. Search user
-         3. Show channels
-         4. Show groups
-         0. Log out
-         */
+       /* 1. Show users
+        2. Search user
+        3. My Channels
+        4. My Groups
+        5. My Chats
+        6. Show channels
+        7. Show groups
+        8. User control
+        9. Group control
+        10 Channel control
+        11. Edit Profile
+        0. Log out""" + last();*/
         while (true) {
-            int menu = MenuUtils.menu(MenuUtils.ADMIN_MENU);
-            switch (menu) {
-                case 1 -> AdminView.showUsers(userService.getList());
+            int menu = menu(ADMIN_MENU);
+            switch (menu){
+                case 1 -> showUsers(userService.getList());
                 case 2 -> searchUser();
-                case 3 -> AdminView.showChannels();
-                case 4 -> showGroups();
-                case 0 -> {
-                    int change = ScanInput.getInt("Are you  want to exit of your profile? " +
-                                                  "\n 1.. Yes \n 2. No");
-                    if (change == 1) {
+                case 3 -> showMyChannels(admin);
+                case 4 -> showMyGroups(admin);
+                case 5 -> showMyChats(admin);
+                case 6 -> showChannels(admin);
+                case 7 -> showGroups(groupService.getList());
+                case 8 -> userControl(null);
+                case 9 -> groupControl();
+                case 10 -> channelControl();
+                case 11 -> {
+                    if (logOut() == 1) {
                         return;
                     }
                 }
-                default -> System.out.println("Wrong choice menu, try again ❌❌❌");
             }
         }
+
     }
+
 
     private static void showUsers(List<User> userList) {
-        if(userList == null){
-            System.out.println("User is not found");
-        }else{
+        if(userList.isEmpty()) NotFound("user");
+        System.out.print(menuCreate("show users"));
 
-            System.out.printf("""
-                ==========================================================
-                                     USERS LIST  (%d users)
-                ==========================================================
-                """, userList.size());
-            System.out.printf("%S1$20 %S2$20 %S3$10 %S4$10 %S5$10 %S6$10 %n",
-                    "username", "name", "role", "status", "birthday", "age");
-            for (int i = 0; i < userList.size(); i++) {
-                User user = userList.get(i);
-                int userAge = userService.getUserAge(user.getBirthDay());
-                System.out.printf("%d. %s1$20 %s2$10 %s3$10 %s4$10 %s5$10 %n", i + 1 + "." +
-                                   " \t " + user.getUsername() +
-                                   " \t " + user.getName() +
-                                   " \t   " + user.getRole() +
-                                   " \t " + user.getStatus() + " " +
-                                   "\t " + user.getBirthDay() +
-                                   " \t " + userAge);
-            }
-            System.out.println("=".repeat(50));
-
-            int ind = ScanInput.getInt("Choose user: ") - 1;
-            User user = userList.get(ind);
-            UserControl(user);
+        System.out.format("%-3S" + "%-12S"+"%-12S" + "%-10S" + " %-5S %n%n",
+                "№", "username", "password", "status", "role");
+        for (int i = 0; i < userList.size(); i++) {
+            User user = userList.get(i);
+            System.out.format("%-3d" + "%-12S"+"%-12S" + "%-10S" + " %-5S %n",
+                    i+1, user.getUsername(), user.getPassword(), user.getStatus(), user.getRole());
+            /*System.out.println(
+                    i+1  + "  " + "username: " + user.getUsername() + "    password: " +
+                    user.getPassword() + "    status: " + user.getStatus() +
+                    "    role: " + user.getRole());*/
         }
-    }
-
-    private static void showGroups() {
-        System.out.println("EXIST GROUPS: \n" + "=".repeat(50));
-        List<Group> groupList = groupService.getList();
-        for (int i = 0; i < groupList.size(); i++) {
-            Group group = groupList.get(i);
-            List<String> users = groupService.getUsersInGroup(group.getID());
-            int countOfSubscribes = users.size();
-
-            String ownerID = String.valueOf(groupList.get(i).getOwnerID());
-            User owner = userService.get(ownerID);
-            System.out.println(i + 1 + ". GroupName: " + group.getName() +
-                               " Owner: " + owner.getUsername() +
-                               "   " + countOfSubscribes + " subscribes");
-        }
-        int groupInd = ScanInput.getInt("Choose group: ");
-        Group group = groupList.get(groupInd);
-        List<Message> groupMessagesList = messageService.getMessagesByChatID(group.getID());
-        showMessages(groupMessagesList, group.getName());
-    }
-
-    private static void UserControl(User user) {
-        /**
-         1. Show user info
-         2. Show user channels
-         3. Show user groups
-         4. Block user
-         5. Unblock user
-         0. back to menu
-         */
-        while (true) {
-            System.out.println("User : " + user.getUsername());
-            int menu = MenuUtils.menu(MenuUtils.USER_CONTROL_MENU);
-            switch (menu) {
-                case 1 -> showUserInfo(user);
-                case 2 -> showUserChannels(user);
-                case 3 -> showUserGroups(user);
-                case 4 -> blockUser(user);
-                case 5 -> unblockUser(user);
-                case 0 -> {
-                    return;
-                }
-                default -> {
-                    System.out.println("Wrong choice menu, try again ❌❌❌");
-                }
-            }
-        }
-    }
-
-    private static void unblockUser(User user) {
-        if (user.getStatus().equals(StatusType.BLOCKED)) {
-            user.setStatus(StatusType.ACTIVE);
-            userService.update(user);
-        }
-        System.out.println("user " + user.getUsername() + " was removed from the block ✅✅✅");
-    }
-
-    private static void blockUser(User user) {
-        if (user.getStatus().equals(StatusType.ACTIVE)) {
-            user.setStatus(StatusType.BLOCKED);
-        }
-        userService.update(user);
-        System.out.println("User " + user.getUsername() + " is blocked ✅✅✅");
-    }
-
-    private static void showUserGroups(User user) {
-        System.out.printf("""
-                ==========================================================
-                                        %S GROUPS
-                ==========================================================
-                """, user.getUsername());
-
-        List<Group> userGroups = groupService.getGroups(user.getID());
-        for (int i = 0; i < userGroups.size(); i++) {
-            Group group = userGroups.get(i);
-            User ownerGroup = userService.get(group.getOwnerID());
-            List<String> groupUsers = groupService.getUsersInGroup(group.getID());
-            int countMembers = groupUsers.size();
-            System.out.println(i + 1 + ". " + group.getName() +
-                               "\tOwner: " + ownerGroup.getUsername() +
-                               "\t" + countMembers + " members");
-        }
-
-        int groupInd = ScanInput.getInt("Choose group: ") - 1;
-        EnterGroup(userGroups.get((groupInd)));
-    }
-
-    private static void EnterGroup(Group group) {
-
-    }
-
-    private static void showUserChannels(User user) {
-
-        List<Channel> channels = channelService.getChannels(user.getID());
-        if (channels != null) {
-            int countOfChannels = channels.size();
-
-            System.out.printf("""
-                    ==========================================================
-                                   %S CHANNELS (%d channels)
-                    ==========================================================
-                    """, user.getUsername(), countOfChannels);
-
-            for (int i = 0; i < channels.size(); i++) {
-                Channel channel = channels.get(i);
-                User authorChannel = userService.get(channel.getOwnerID());
-                System.out.println(i + 1 + ". " + channel.getName() +
-                                   "\t" + authorChannel.getUsername());
-            }
-
-            int channelInd = ScanInput.getInt("Choose channel: ") - 1;
-            EnterChannel(channels.get(channelInd));
-        } else {
-            System.out.println(user.getUsername() + " does not have a channel");
-        }
-    }
-
-    private static void EnterChannel(Channel channel) {
-        System.out.printf("""
-                ==========================================================
-                                        %S CHANNEL
-                ==========================================================
-                """, channel.getName());
-
-    }
-
-    private static void showUserInfo(User user) {
-        System.out.println("""
-                ==========================================================
-                                        USER INFO
-                ==========================================================""");
-        int userAge = userService.getUserAge(user.getBirthDay());
-
-        System.out.println("UserName: " + user.getUsername() +
-                           "\nPassword: " + user.getPassword() +
-                           "\nName: " + user.getName() +
-                           "\nLastName: " + user.getLastName() +
-                           "\nBirthday: " + user.getBirthDay() +
-                           "\nAge: " + userAge +
-                           "\nRole: " + user.getRole() +
-                           "\nStatus: " + user.getStatus());
-    }
-
-
-    private static void showChannels() {
-        List<Channel> channelList = channelService.getList();
-        if (channelList == null){
-            System.out.println("Channel not found ❌❌❌");
-
-            int choose = ScanInput.getInt("Are you want create new Channel? " +
-                                          "\n 1. Yes \n 2. No \n Choose: ");
-            if (choose == 1) getOrCreateChannel(curUser);
-
-        }else {
-            System.out.printf("""
-                ==========================================================\s
-                                ALL EXIST CHANNELS (%d channel)\s
-                ==========================================================""",
-                    channelList.size());
-
-            int countOfSubscribes = 0;
-            List<User> userList = userService.getList();
-            for (int i = 0; i < channelList.size(); i++) {
-                User user = userList.get(i);
-                Channel channel = channelList.get(i);
-                if (channelService.userSubscriptionToChannel(channel.getID(), user.getID())) {
-                    countOfSubscribes++;
-                }
-                User author = userService.get(channel.getOwnerID());
-                System.out.println(i + 1 + ". " + channel.getName() + "   " + author.getUsername() +
-                                   "   (" + countOfSubscribes + "  subscribes)");
-            }
-        }
-
+        System.out.println(last());
     }
 
     private static void searchUser() {
-        showUsers(userService.getList());
-        System.out.println("""
-                ==========================================================
-                                        SEARCH USER
-                ==========================================================""");
-
-
-        System.out.println(("Fields :\n" + "=".repeat(50) +
-                            "\n 1. name " +
-                            "\n 2. username " +
-                            "\n 3. role " +
-                            "\n 4. status " +
-                            "\n 5. Back to Menu"));
-        int search = ScanInput.getInt("Choose Field: ");
-
-        List<User> users = userService.getList();
-
-        User searchingUser = null;
-        switch (search) {
-            case 1 -> {
-                String name = ScanInput.getStr("Enter name: ");
-                for (User user : users) {
-                    if (user.getName().equals(name)) {
-                        searchingUser = user;
-                        break;
-                    }
+        System.out.println(menuCreate("searching user by"));
+        while (true){
+            System.out.println("\n" +
+                               "1. username \n" +
+                               "2. name \n" +
+                               "3. status \n" +
+                               "4. role \n" +
+                               "   0. Exit" + last());
+            int ch = getInt("Choose: ");
+            String userField;
+            switch (ch){
+                case 1 -> searchingUserByUsername();
+                case 2 -> searchingUserByName();
+                case 3 -> searchingUserByStatus();
+                case 4 -> searchingUserByRole();
+                case 0 -> {
+                    return;
                 }
-                if (searchingUser != null) {
-                    UserControl(searchingUser);
-                } else {
-                    System.out.println("User is not found ❌❌❌");
-                }
-            }
-            case 2 -> {
-                String username = ScanInput.getStr("Enter username: ");
-                for (User user : users) {
-                    if (user.getUsername().equals(username)) {
-                        searchingUser = user;
-                        break;
-                    }
-                }
-                if (searchingUser != null) {
-                    UserControl(searchingUser);
-                } else {
-                    System.out.println("User is not found ❌❌❌");
-                }
-            }
-            case 3 -> {
-
+                default -> System.out.println("Wrong choice, try again");
             }
         }
+    }
+
+    private static void searchingUserByRole() {
+        UserRole.showType();
+        int typeInd = getInt("Choose : ") - 1;
+        StatusType type = StatusType.getType(typeInd);
+
+        List<User> foundUsers = userService.getListMatchStatusType(type);
+
+        if (foundUsers != null) showUsers(foundUsers);
+        else NotFound("user");
+    }
+
+    private static void searchingUserByStatus() {
+        StatusType.showType();
+        int typeInd = getInt("Choose : ") - 1;
+        StatusType type = StatusType.getType(typeInd);
+
+        List<User> foundUsers = userService.getListMatchStatusType(type);
+
+        if (foundUsers != null) showUsers(foundUsers);
+        else NotFound("user");
+    }
+
+    private static void searchingUserByName() {
+        String userField;
+        userField = getStr("Enter searching user's name: ");
+        List<User> listMatchName = userService.getListMatchName(userField);
+        showUsers(listMatchName);
+    }
+
+    private static void searchingUserByUsername() {
+        String userField;
+        userField = getStr("Enter searching username: ");
+        User foundUser = userService.getUserByUsername(userField);
+
+        if (foundUser != null) userControl(foundUser);
+        else NotFound("user");
+    }
+
+
+    private static void showMyChannels(User admin) {
 
     }
 
+    private static void showMyGroups(User admin) {
+
+    }
+
+    private static void showMyChats(User admin) {
+
+    }
+
+    private static void showChannels(User admin) {
+
+    }
+
+    private static void showGroups(List<Group> groupList) {
+
+    }
+
+    private static void userControl(User user) {
+
+    }
+
+    private static void groupControl() {
+
+    }
+    private static void channelControl() {
+
+    }
+
+    private static int logOut() {
+        while (true){
+            int exit = getInt("Are you want exit from your Profile ? \n 1. Yes \n 2. No");
+            if (exit == 1) {
+                return 1;
+            } else if (exit == 2);
+            else {
+                System.out.println("Wrong choice, please valid value");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        showUsers(userService.getList());
+    }
 }

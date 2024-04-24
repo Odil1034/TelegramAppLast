@@ -1,7 +1,7 @@
 package uz.pdp.backend.models.groupFollower;
 
 import uz.pdp.backend.models.BaseModel;
-import uz.pdp.backend.types.group.groupRole.GroupRole;
+import uz.pdp.backend.types.group.GroupRole;
 
 public class GroupFollower extends BaseModel {
 

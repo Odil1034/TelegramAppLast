@@ -1,5 +1,7 @@
 package uz.pdp.backend.types.user;
 
+import uz.pdp.frontend.utills.MenuUtils;
+
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -9,14 +11,12 @@ public enum UserRole {
     ADMIN;
 
     public static void showType() {
-        System.out.println("""
-                ==========================================================
-                                      USER ROLE TYPES
-                ==========================================================""");
+        System.out.println(MenuUtils.menuCreate("user role"));
         UserRole[] values = values();
         for (UserRole value : values) {
             System.out.println(value.ordinal() + 1 + ".  " + value);
         }
+        System.out.println(MenuUtils.last());
     }
 
     public static UserRole getType(int index){

@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface FollowerService extends BaseService<Follower> {
 
+    boolean leaveTheChannel(String userID);
     List<User> getFollowers(String channelID);
     List<Channel> getSubscribeChannels(String userID);
     List<Channel> getUnsubscribeChannels(String channelID, String userID);
+    List<Channel> getUnsubscribeChannels(String userID);
     boolean checkUserSubscriptionToChannel(String channelID, String userID);
     int getCountOfUsersInChannel(String channelID);
 

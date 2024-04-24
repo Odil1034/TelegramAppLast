@@ -1,19 +1,19 @@
 package uz.pdp.backend.types.group;
 
+import uz.pdp.frontend.utills.MenuUtils;
+
 public enum GroupStatus {
 
     ACTIVE,
     DELETED;
 
     public static void showType() {
-        System.out.println("""
-                ==========================================================
-                                       GROUP ROLE
-                ==========================================================""");
+        System.out.println(MenuUtils.menuCreate("group status"));
         GroupStatus[] values = values();
         for (GroupStatus value : values) {
             System.out.println(value.ordinal() + 1 + ".  " + value);
         }
+        System.out.println(MenuUtils.last());
     }
 
     public static GroupStatus getType(int index){

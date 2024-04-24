@@ -17,22 +17,38 @@ public class UserServiceImp implements UserService {
 
     private UserServiceImp() {
         this.users = new ArrayList<>();
+        users.add(new User("Sardor", "Baxodirov",
+                LocalDate.of(2001, Month.SEPTEMBER, 12), "1",
+                "1", UserRole.ADMIN, StatusType.ACTIVE));
 
-        users.add(new User("admin1", "admin1",
-                LocalDate.of(2001, Month.AUGUST, 7), "admin",
-                "qwerty", UserRole.ADMIN, StatusType.ACTIVE));
+        users.add(new User("Anvar", "Baxromov",
+                LocalDate.of(1993, Month.JANUARY, 7), "2",
+                "2", UserRole.USER, StatusType.ACTIVE));
 
-        users.add(new User("user1", "user1",
-                LocalDate.of(2002, Month.JANUARY, 1), "user1",
-                "qwerty", UserRole.USER, StatusType.ACTIVE));
 
-        users.add(new User("user2", "user2",
-                LocalDate.of(2003, Month.DECEMBER, 3), "user2",
-                "qwerty", UserRole.USER, StatusType.ACTIVE));
+        users.add(new User("Sanjar", "Temirov",
+                LocalDate.of(2002, Month.JANUARY, 1), "Sanjar1",
+                "u1", UserRole.USER, StatusType.ACTIVE));
 
-        users.add(new User("user4", "user4",
-                LocalDate.of(2004, Month.FEBRUARY, 28), "user3",
-                "qwerty", UserRole.USER, StatusType.ACTIVE));
+        users.add(new User("Ikrom", "Umarov",
+                LocalDate.of(2003, Month.DECEMBER, 3), "Imrom2",
+                "u2", UserRole.USER, StatusType.ACTIVE));
+
+        users.add(new User("Sanobar", "Abbosova",
+                LocalDate.of(2004, Month.FEBRUARY, 28), "Sanobar3",
+                "u3", UserRole.USER, StatusType.ACTIVE));
+
+        users.add(new User("Guli", "Mustafoyeva",
+                LocalDate.of(2002, Month.JANUARY, 1), "Guli3",
+                "u4", UserRole.USER, StatusType.ACTIVE));
+
+        users.add(new User("Umida", "Murodova",
+                LocalDate.of(2003, Month.DECEMBER, 3), "Umida4",
+                "u5", UserRole.USER, StatusType.ACTIVE));
+
+        users.add(new User("Eshmat", "Ismatov",
+                LocalDate.of(2004, Month.FEBRUARY, 28), "Eshmat5",
+                "u6", UserRole.USER, StatusType.ACTIVE));
     }
 
     // Singleton Design Pattern
