@@ -9,15 +9,15 @@ public class Message extends BaseModel {
 
     private String authorID;
     private String content;
-    private String chatOrGroupID;
+    private String receiverID;
     private ReceiverType receiverType;
     private LocalDateTime dateTime;
 
-    public Message(String authorID, String content, String chatOrGroupID,
+    public Message(String authorID, String content, String receiverID,
                    ReceiverType receiverType, LocalDateTime dateTime) {
         this.authorID = authorID;
         this.content = content;
-        this.chatOrGroupID = chatOrGroupID;
+        this.receiverID = receiverID;
         this.receiverType = receiverType;
         this.dateTime = dateTime;
     }
@@ -38,12 +38,12 @@ public class Message extends BaseModel {
         this.content = content;
     }
 
-    public String getChatOrGroupID() {
-        return chatOrGroupID;
+    public String getReceiverID() {
+        return receiverID;
     }
 
-    public void setChatOrGroupID(String chatOrGroupID) {
-        this.chatOrGroupID = chatOrGroupID;
+    public void setReceiverID(String receiverID) {
+        this.receiverID = receiverID;
     }
 
     public ReceiverType getReceiverType() {

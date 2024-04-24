@@ -10,5 +10,5 @@ public interface ChannelService extends BaseService<Channel> {
 
     boolean writeContent(String channelID, Message message);
     List<Channel> getMyChannels(String userID);
-
+    boolean deleteChannel(String channelID);
 }

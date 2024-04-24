@@ -34,8 +34,8 @@ public interface MenuUtils {
             3. My Channels
             4. My Groups
             5. My Chats
-            6. Show channels
-            7. Show groups
+            6. Show all channels
+            7. Show all groups
             8. User control
             9. Group control
             10 Channel control
@@ -78,9 +78,8 @@ public interface MenuUtils {
             3. Delete message
             4. Add user to channel
             5. Edit Description
-            6. Delete Channel
-            7. Edit Profile
-            8. Delete Channel
+            6. Edit Profile
+            7. Delete Channel
               0. Exit""" + last();
 
 

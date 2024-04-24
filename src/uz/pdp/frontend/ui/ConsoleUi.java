@@ -11,8 +11,9 @@ public class ConsoleUi {
 
     public static void main(String[] args) {
 
-        System.out.println("==========================================================\n" +
-                "Welcome to Our Telegram Application 😊😊😊");
+        String message = MenuUtils.menuCreate("Welcome to Our Telegram Application 😊😊😊");
+        System.out.print(message);
+
 
         while (true) {
             int menu = MenuUtils.menu(MenuUtils.MAIN);
@@ -23,6 +24,7 @@ public class ConsoleUi {
                 default -> System.out.println("Wrong choice, try again ❌❌❌");
             }
         }
+
     }
 
     private static void loginUser() {

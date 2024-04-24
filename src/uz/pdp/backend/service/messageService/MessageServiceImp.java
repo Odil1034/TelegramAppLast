@@ -1,6 +1,5 @@
 package uz.pdp.backend.service.messageService;
 
-import uz.pdp.backend.models.group.Group;
 import uz.pdp.backend.models.message.Message;
 import uz.pdp.backend.service.groupService.GroupService;
 import uz.pdp.backend.service.groupService.GroupServiceImp;
@@ -11,7 +10,6 @@ import java.util.List;
 
 public class MessageServiceImp implements MessageService{
 
-    GroupService groupService = GroupServiceImp.getInstance();
     private static MessageService service;
     private final List<Message> messages;
 
@@ -69,26 +67,68 @@ public class MessageServiceImp implements MessageService{
     }
 
     @Override
-    public List<Message> getMessagesInGroup(String groupOrChatID) {
-        List<Message> messagesInChat = new ArrayList<>();
-        for (Message message : messages) {
-            if (message.getChatOrGroupID().equals(groupOrChatID)){
-                messagesInChat.add(message);
-            }
-        }
-        return messagesInChat;
-    }
-
-    @Override
-    public boolean addMessageInGroup(String messageID, String groupID) {
+    public boolean addMessage(Message newMessage, String receiverID, ReceiverType type) {
 
         for (Message message : messages) {
-            if (message.getID().equals(messageID)) {
-                message.setReceiverType(ReceiverType.GROUP);
-                message.setChatOrGroupID(groupID);
+            if (message.getID().equals(newMessage.getID())) {
+                message.setReceiverType(type);
+                message.setReceiverID(receiverID);
                 return true;
             }
         }
+
         return false;
+    }
+
+    public List<Message> getGroupMessages(String groupID, ReceiverType type){
+        List<Message> groupMessages = new ArrayList<>();
+
+        for (Message message : messages) {
+            if (message.getReceiverID().equals(groupID) &&
+                message.getReceiverType().equals(ReceiverType.GROUP)) {
+                groupMessages.add(message);
+            }
+        }
+
+        return groupMessages;
+    }
+
+    public List<Message> getChannelMessages(String channelID, ReceiverType type){
+        List<Message> groupMessages = new ArrayList<>();
+
+        for (Message message : messages) {
+            if (message.getReceiverID().equals(channelID) &&
+                message.getReceiverType().equals(ReceiverType.CHANNEL)) {
+                groupMessages.add(message);
+            }
+        }
+
+        return groupMessages;
+    }
+
+    public List<Message> getChatMessages(String chatID, ReceiverType type){
+        List<Message> groupMessages = new ArrayList<>();
+
+        for (Message message : messages) {
+            if (message.getReceiverID().equals(chatID) &&
+                message.getReceiverType().equals(ReceiverType.GROUP)) {
+                groupMessages.add(message);
+            }
+        }
+
+        return groupMessages;
+    }
+
+    @Override
+    public List<Message> getMyMessages(List<Message> receiverMessages, String userID) {
+
+        List<Message> myMessages = new ArrayList<>();
+
+        for (Message message : receiverMessages) {
+            if (message.getAuthorID().equals(userID)) {
+                myMessages.add(message);
+            }
+        }
+        return myMessages;
     }
 }

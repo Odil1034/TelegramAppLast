@@ -1,7 +1,10 @@
 package uz.pdp.backend.service.channelService;
 
 import uz.pdp.backend.models.channel.Channel;
+import uz.pdp.backend.models.follower.Follower;
 import uz.pdp.backend.models.message.Message;
+import uz.pdp.backend.service.FollowerService.FollowerService;
+import uz.pdp.backend.service.FollowerService.FollowerServiceImp;
 import uz.pdp.backend.service.messageService.MessageService;
 import uz.pdp.backend.service.messageService.MessageServiceImp;
 import uz.pdp.backend.service.userService.UserService;
@@ -95,6 +98,18 @@ public class ChannelServiceImp implements ChannelService {
             }
         }
         return ownerChannels;
+    }
+
+    @Override
+    public boolean deleteChannel(String channelID) {
+        FollowerService followerService = FollowerServiceImp.getInstance();
+        for (Follower follower : followerService.getList()) {
+            if (follower.getChannelID().equals(channelID)) {
+                followerService.delete(follower.getID());
+            }
+        }
+        channels.removeIf(channel -> channel.getID().equals(channelID));
+        return true;
     }
 
     public int countAllChannels(){
